@@ -1,17 +1,23 @@
 <script>
-	export default {
-		onLaunch: function() {
-			console.log('App Launch')
-		},
-		onShow: function() {
-			console.log('App Show')
-		},
-		onHide: function() {
-			console.log('App Hide')
-		}
-	}
+export default {
+  onLaunch: function() {
+    console.log('App Launch')
+  },
+  onShow: function() {
+    console.log('App Show')
+  },
+  onHide: function() {
+    console.log('App Hide')
+  }
+}
 </script>
 
-<style>
-	/*每个页面公共css */
+<style lang="scss">
+/*每个页面公共css */
+@import '@/common/scss/common.scss';
+
+uni-page-body,
+#app {
+  height: 100%;
+}
 </style>

@@ -1,0 +1,53 @@
+
+.hover-class {
+	opacity: 0.7;
+}
+.input-placeholder {
+	font-size: 14px;
+	color: #ccc;
+}
+
+.border-top ::after {
+	border-top: solid 1rpx;
+}
+.border-bottom ::after {
+	border-bottom: solid 1rpx;
+}
+.border, .border-top, .border-bottom {
+	position: relative;
+	&::after {
+		content: '';
+		position: absolute;
+		z-index: 1;
+		top: 50%;
+		left: 50%;
+		width: 200%;
+		height: 200%;
+		border-color: $uni-border-color;
+		box-sizing: border-box;
+		transform: translate(-50%, -50%) scale(0.5);
+	}
+}
+
+.line1-overflow {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 1; /*要显示的行数*/
+	-webkit-box-orient: vertical;
+}
+  
+.line2-overflow {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2; /*要显示的行数*/
+	-webkit-box-orient: vertical;
+}
+.line3-overflow {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3; /*要显示的行数*/
+	-webkit-box-orient: vertical;
+}
