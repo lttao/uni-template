@@ -1,19 +1,19 @@
 import { BASE } from './const.js'
-import { setToken, getToken, removeToken } from './token.js'
+import { ignoreTokenApi } from './config.js'
+import { getToken, removeToken } from '@/util/storege'
 
 const BASEURL = BASE // 网络端口
 const TIMEOUT = 10000 // 网络超时
-// 部分接口不需要token
-const ignoreTokenApiList = ['/gp/app/product/page/index']
+const ignoreTokenApiList = ignoreTokenApi // 部分接口不需要token
 const getHeader = () => {
-  return { authorization: getToken || '', 'Content-Type': 'application/json' }
+  return { authorization: getToken() || '', 'Content-Type': 'application/json' }
 }
 
 // 响应拦截
 const responseInterceptors = (response = {}) => {
   return new Promise((resolve, reject) => {
     let { data = {} } = response
-    if (!data) return reject('processed')
+    if (!data) return reject(new Error('接口返回异常'))
     if (typeof data === 'string') {
       try {
         data = JSON.parse(data)
@@ -32,7 +32,7 @@ const responseInterceptors = (response = {}) => {
       uni.reLaunch({
         url: '/pages/login/login'
       })
-      return reject('processed')
+      return reject(new Error('用户失效'))
     } else {
       uni.showToast({
         title: data.message,
