@@ -16,50 +16,52 @@ uni-checkbox, checkbox {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-}
-uni-checkbox .uni-checkbox-input, checkbox .wx-checkbox-input {
-	margin-right: 20rpx;
-	width: 30rpx;
-	height: 30rpx;
-	flex-shrink: 0;
-	border-radius: 50%;
-	border: 1px solid #f4f4f4;
-	box-sizing: border-box;
-	outline: 0;
-}
-uni-checkbox .uni-checkbox-input.uni-checkbox-input-checked, checkbox .wx-checkbox-input.wx-checkbox-input-checked {
-	background-color: $main-color;
-	border: 1px solid $main-color!important;
-	box-sizing: border-box;
-}
-uni-checkbox .uni-checkbox-input.uni-checkbox-input-checked:before, checkbox .wx-checkbox-input.wx-checkbox-input-checked:before {
-	font-size: 14px;
-	color: #fff;
-}
-uni-checkbox .uni-checkbox-wrapper {
-	width: 100%;
+	.wx-checkbox-input {
+		margin-right: 20rpx;
+		width: 30rpx;
+		height: 30rpx;
+		flex-shrink: 0;
+		border-radius: 50%;
+		border: 1px solid #f4f4f4;
+		box-sizing: border-box;
+		outline: 0;
+	}
+	.uni-checkbox-input.uni-checkbox-input-checked {
+		background-color: $main-color;
+		border: 1px solid $main-color!important;
+		box-sizing: border-box;
+	}
+	.uni-checkbox-input.uni-checkbox-input-checked:before {
+		font-size: 14px;
+		color: #fff;
+	}
+	.uni-checkbox-wrapper {
+		width: 100%;
+	}
 }
   
 // 单选框
-uni-radio .uni-radio-input, radio .wx-radio-input {
-	position: relative;
-	margin-right: 10rpx;
-	width: 30rpx;
-	height: 30rpx;
-	border-radius: 50%;
-	border: 1px solid #f4f4f4;
-	box-sizing: border-box;
-	appearance: none;
-	outline: 0;
-}
-uni-radio .uni-radio-input.uni-radio-input-checked, radio .wx-radio-input.wx-radio-input-checked {
-	background-color: $main-color!important;
-	border: 1rpx solid $main-color!important;
-	box-sizing: border-box;
-}
-uni-radio .uni-radio-input.uni-radio-input-checked:before, radio .wx-radio-input.wx-radio-input-checked:before {
-	font-size: 14px;
-	color: #fff;
+uni-radio radio {
+	.wx-radio-input {
+		position: relative;
+		margin-right: 10rpx;
+		width: 30rpx;
+		height: 30rpx;
+		border-radius: 50%;
+		border: 1px solid #f4f4f4;
+		box-sizing: border-box;
+		appearance: none;
+		outline: 0;
+	}
+	.uni-radio-input.uni-radio-input-checked {
+		background-color: $main-color!important;
+		border: 1rpx solid $main-color!important;
+		box-sizing: border-box;
+	}
+	.uni-radio-input.uni-radio-input-checked:before {
+		font-size: 14px;
+		color: #fff;
+	}
 }
 // h5 加载
 uni-toast .uni-toast {
@@ -70,11 +72,11 @@ uni-toast .uni-toast {
 	align-items: center;
 	justify-content: center;
 	font-size: 14px;
-}
-uni-toast .uni-icon_toast.uni-loading {
-	margin: 0;
-}
-uni-toast .uni-toast__content {
-	margin: 0;
-	padding-top: 10rpx;
+	.uni-icon_toast.uni-loading {
+		margin: 0;
+	}
+	.uni-toast__content {
+		margin: 0;
+		padding-top: 10rpx;
+	}
 }
