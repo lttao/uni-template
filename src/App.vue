@@ -14,6 +14,8 @@ export default {
 
 <style lang="scss">
 /*每个页面公共css */
+@import '@/common/scss/const.scss';
+@import '@/common/scss/default.scss';
 @import '@/common/scss/common.scss';
 
 uni-page-body,
