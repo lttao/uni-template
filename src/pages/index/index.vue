@@ -1,6 +1,6 @@
 <template>
   <view class="content">
-    <image class="logo" src="/static/images/public/logo.png"></image>
+    <image class="logo" src="/static/images/logo.png"></image>
     <view>
       <text class="title sss">{{ title }}</text>
       <view></view>
@@ -12,7 +12,7 @@
 export default {
   data() {
     return {
-      title: 'Hello'
+      title: 'LUOTAO'
     }
   },
   onLoad() {},
