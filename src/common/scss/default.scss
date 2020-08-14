@@ -1,4 +1,4 @@
-
+// image height 不固定会出现加载时拉伸的bug
 image {
 	width: 100%;
 	height: 100%;
@@ -80,3 +80,15 @@ uni-toast .uni-toast {
 		padding-top: 10rpx;
 	}
 }
+
+
+/* start--提升H5端uni.toast()的层级，避免被uView的modal等遮盖--start */
+/* #ifdef H5 */
+uni-toast {
+    z-index: 10090;
+}
+uni-toast .uni-toast {
+   z-index: 10090;
+}
+/* #endif */
+/* end--提升H5端uni.toast()的层级，避免被uView的modal等遮盖--end */
