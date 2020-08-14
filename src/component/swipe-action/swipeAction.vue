@@ -1,24 +1,25 @@
 <template>
-  <view class="">
-    <movable-area class="u-swipe-action" :style="{ backgroundColor: bgColor }">
+  <view>
+    <movable-area class="swipe-action" :style="{ backgroundColor: bgColor }">
       <movable-view
-        class="u-swipe-view"
+        class="swipe-view"
         @change="change"
         @touchend="touchend"
         @touchstart="touchstart"
         direction="horizontal"
         :disabled="disabled"
         :x="moveX"
+        :damping="80"
         :style="{
           width: movableViewWidth ? movableViewWidth : '100%'
         }"
       >
-        <view class="u-swipe-content" @tap.stop="contentClick">
+        <view class="swipe-content" @tap.stop="contentClick">
           <slot></slot>
         </view>
         <block v-if="showBtn">
-          <view class="u-swipe-del" @tap.stop="btnClick(index)" :style="[btnStyle(item.style)]" v-for="(item, index) in options" :key="index">
-            <view class="u-btn-text">{{ item.text }}</view>
+          <view class="swipe-del" @tap.stop="btnClick(index)" :style="[btnStyle(item.style)]" v-for="(item, index) in options" :key="index">
+            <view class="btn-text">{{ item.text }}</view>
           </view>
         </block>
       </movable-view>
@@ -41,10 +42,14 @@
  * @event {Function} close 组件触发关闭状态时
  * @event {Function} content-click 点击内容时触发
  * @event {Function} open 组件触发打开状态时
- * @example <u-swipe-action btn-text="收藏">...</u-swipe-action>
+ * @example <swipe-action btn-text="收藏">...</swipe-action>
  */
+
+// 区分是否是自己
+let ARRAY = []
+
 export default {
-  name: 'u-swipe-action',
+  name: 'swipe-action',
   props: {
     // index值，用于得知点击删除的是哪个按钮
     index: {
@@ -96,6 +101,13 @@ export default {
       }
     }
   },
+  created() {
+    ARRAY.push(this)
+    console.log(ARRAY)
+  },
+  destroyed() {
+    ARRAY = ARRAY.filter((item) => item !== this)
+  },
   data() {
     return {
       moveX: 0, // movable-view元素在x轴上需要移动的目标移动距离，用于展开或收起滑动的按钮
@@ -129,9 +141,11 @@ export default {
   methods: {
     // 点击按钮
     btnClick(index) {
-      this.status = false
       // this.index为点击的几个组件，index为点击某个组件的第几个按钮(options数组的索引)
-      this.$emit('click', this.index, index)
+      this.$emit('action-click', this.index, index)
+      this.$nextTick(() => {
+        this.close()
+      })
     },
     // movable-view元素移动事件
     change(e) {
@@ -186,6 +200,7 @@ export default {
           }
         }
       })
+      ARRAY.filter((item) => item !== this).forEach((item) => item.close())
     },
     emitOpenEvent() {
       this.$emit('open', this.index)
@@ -197,7 +212,7 @@ export default {
     touchstart() {},
     getActionRect() {
       console.log(this.$getRect, '$getRect')
-      this.$getRect('.u-swipe-action').then((res) => {
+      this.$getRect('.swipe-action').then((res) => {
         this.movableAreaWidth = res.width
         // 等视图更新完后，再显示右边的可滑动按钮，防止这些按钮会"闪一下"
         this.$nextTick(() => {
@@ -209,10 +224,11 @@ export default {
     contentClick() {
       // 点击内容时，如果当前为打开状态，收起组件
       if (this.status === true) {
-        this.status = 'close'
-        this.moveX = 0
+        this.$nextTick(() => {
+          this.close()
+        })
       } else {
-        this.$emit('content-click', this.index)
+        this.$emit('click', this.index)
       }
     }
   }
@@ -220,31 +236,31 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.u-swipe-action {
+.swipe-action {
   width: auto;
   height: initial;
   position: relative;
   overflow: hidden;
 }
 
-.u-swipe-view {
+.swipe-view {
   display: flex;
   height: initial;
   position: relative;
   /* 这一句很关键，覆盖默认的绝对定位 */
 }
 
-.u-swipe-content {
+.swipe-content {
   flex: 1;
 }
 
-.u-swipe-del {
+.swipe-del {
   position: relative;
   font-size: 30rpx;
   color: #ffffff;
 }
 
-.u-btn-text {
+.btn-text {
   position: absolute;
   top: 50%;
   left: 50%;

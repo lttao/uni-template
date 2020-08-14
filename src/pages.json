@@ -3,7 +3,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "template"
 			}
 		},
 		{
@@ -15,7 +15,13 @@
 		{
 			"path": "pages/example/swiperaction",
 			"style": {
-				"navigationBarTitleText": "swiperaction"
+				"navigationBarTitleText": "swiper action"
+			}
+		},
+		{
+			"path": "pages/example/collapse",
+			"style": {
+				"navigationBarTitleText": "collapse"
 			}
 		}
 	],

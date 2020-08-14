@@ -1,19 +1,24 @@
 <template>
   <view>
-    <swiper-action :options="options">
-      <view>你的说法</view>
-    </swiper-action>
+    <block v-for="(item, index) in list" :key="index">
+      <swiper-action @click="toDetail(item)" @action-click="onDel" :options="options">
+        <cell :title="item.title"></cell>
+      </swiper-action>
+    </block>
   </view>
 </template>
 
 <script>
+import cell from '@/component/cell/cell.vue'
 import swiperAction from '@/component/swipe-action/swipeAction'
 export default {
   components: {
+    cell,
     swiperAction
   },
   data() {
     return {
+      list: [{ title: '大法' }, { title: 'dsdsfa' }],
       options: [
         {
           text: '删除',
@@ -23,6 +28,16 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    toDetail(item) {
+      this.$toast('点击详情' + item.title)
+    },
+    onDel() {
+      this.$toast('点击删除')
+    }
   }
 }
 </script>
+
+<style lang="scss" scoped></style>
