@@ -3,7 +3,7 @@
     <image class="logo" src="/static/images/logo.png"></image>
     <view>
       <text class="title sss">{{ title }}</text>
-      <view></view>
+      <navigator url="/pages/example/index" redirect hover-class="className">例子</navigator>
     </view>
   </view>
 </template>

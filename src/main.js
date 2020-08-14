@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import App from './App'
 
+import mixin from '@/util/mixin/index.js'
+Vue.mixin(mixin)
+
 Vue.config.productionTip = false
 
 App.mpType = 'app'

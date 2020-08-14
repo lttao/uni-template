@@ -102,7 +102,7 @@ export default {
       scrollX: 0, // movable-view移动过程中产生的change事件中的x轴移动值
       status: false, // 滑动的状态，表示当前是展开还是关闭按钮的状态
       movableAreaWidth: 0, // 滑动区域
-      elId: this.$u.guid(), // id，用于通知另外组件关闭时的识别
+      // elId: this.$u.guid(), // id，用于通知另外组件关闭时的识别
       showBtn: false // 刚开始渲染视图时不显示右边的按钮，避免视图闪动
     }
   },
@@ -118,7 +118,6 @@ export default {
     },
     btnStyle() {
       return (style) => {
-        const css = {}
         style.width = this.btnWidth + 'rpx'
         return style
       }
@@ -197,7 +196,8 @@ export default {
     // 开始触摸
     touchstart() {},
     getActionRect() {
-      this.$uGetRect('.u-swipe-action').then((res) => {
+      console.log(this.$getRect, '$getRect')
+      this.$getRect('.u-swipe-action').then((res) => {
         this.movableAreaWidth = res.width
         // 等视图更新完后，再显示右边的可滑动按钮，防止这些按钮会"闪一下"
         this.$nextTick(() => {
@@ -211,8 +211,9 @@ export default {
       if (this.status === true) {
         this.status = 'close'
         this.moveX = 0
+      } else {
+        this.$emit('content-click', this.index)
       }
-      this.$emit('content-click', this.index)
     }
   }
 }

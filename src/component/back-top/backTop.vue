@@ -140,7 +140,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   background-color: #e1e1e1;
-  color: $u-content-color;
+  color: #666;
   align-items: center;
   transition: opacity 0.4s;
 
