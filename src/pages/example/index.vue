@@ -1,19 +1,28 @@
 <template>
   <view>
     <navigator url="/pages/example/swiperaction">
-      <cell title="swipe action"></cell>
+      <cell-item title="swipe action"></cell-item>
     </navigator>
     <navigator url="/pages/example/collapse">
-      <cell title="collapse"></cell>
+      <cell-item title="collapse"></cell-item>
+    </navigator>
+    <navigator url="/pages/example/cell">
+      <cell-item title="cell"></cell-item>
+    </navigator>
+    <navigator url="/pages/example/field">
+      <cell-item title="field"></cell-item>
     </navigator>
   </view>
 </template>
 
 <script>
-import cell from '@/component/cell/cell.vue'
+import cellItem from '@/component/cell/cellItem.vue'
 export default {
   components: {
-    cell
+    cellItem
+  },
+  data() {
+    return {}
   }
 }
 </script>

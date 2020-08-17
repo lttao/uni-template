@@ -17,7 +17,9 @@
 
 /* start--文本行数限制--start */
 .line-1 {
-    -webkit-line-clamp: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .line-2 {
     -webkit-line-clamp: 2;
@@ -31,7 +33,7 @@
 .line-5 {
     -webkit-line-clamp: 5;
 }
-.line-1, .line-2, .line-3, .line-4, .line-5 {
+.line-2, .line-3, .line-4, .line-5 {
     overflow: hidden;
 	word-break: break-all;
     text-overflow: ellipsis; 
@@ -107,3 +109,81 @@
 	border-width: 1px
 }
 /* end--Retina 屏幕下的 1px 边框--end */
+
+
+/* start--字体大小--start */
+.font-xs {
+	font-size: 10px;
+}
+
+.font-sm {
+	font-size: 12px;
+}
+
+.font-md {
+	font-size: 14rpx;
+}
+
+.font-lg {
+	font-size: 16rpx;
+}
+
+.font-xl {
+	font-size: 18px;
+}
+.font-xxl {
+	font-size: 20px;
+}
+.font-xxxl {
+	font-size: 22px;
+}
+/* end--字体大小 边框--end */
+
+/* start--flex--start */
+.flex {
+	// #ifndef APP-NVUE
+	display: flex;
+	// #endif
+	flex-direction: row;
+	align-items: center;
+}
+.flex-col {
+	// #ifndef APP-NVUE
+	display: flex;
+	// #endif
+	flex-direction: column;
+}
+.flex-wrap {
+	flex-wrap: wrap;
+}
+.col-center {
+	align-items: center;
+}
+.col-top {
+	align-items: flex-start;
+}
+.col-bottom {
+	align-items: flex-end;
+}
+.row-left {
+	justify-content: flex-start;
+}
+
+.row-right {
+	justify-content: flex-end;
+}
+
+.row-between {
+	justify-content: space-between;
+}
+
+.row-around {
+	justify-content: space-around;
+}
+.flex-1 {
+	flex: 1;
+}
+.flex-shrink {
+	flex-shrink: 0;
+}
+/* start--flex--start */

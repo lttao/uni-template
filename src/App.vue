@@ -1,8 +1,6 @@
 <script>
 export default {
   onLaunch: function() {
-    console.log(this)
-    console.log(this.$getRect, 'this.$getRect')
     console.log('App Launch')
   },
   onShow: function() {

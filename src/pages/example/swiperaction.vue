@@ -2,18 +2,18 @@
   <view>
     <block v-for="(item, index) in list" :key="index">
       <swiper-action @click="toDetail(item)" @action-click="onDel" :options="options">
-        <cell :title="item.title"></cell>
+        <cell-item :title="item.title"></cell-item>
       </swiper-action>
     </block>
   </view>
 </template>
 
 <script>
-import cell from '@/component/cell/cell.vue'
+import cellItem from '@/component/cell/cellItem.vue'
 import swiperAction from '@/component/swipe-action/swipeAction'
 export default {
   components: {
-    cell,
+    cellItem,
     swiperAction
   },
   data() {

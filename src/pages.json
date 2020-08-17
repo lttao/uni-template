@@ -23,6 +23,18 @@
 			"style": {
 				"navigationBarTitleText": "collapse"
 			}
+		},
+		{
+			"path": "pages/example/cell",
+			"style": {
+				"navigationBarTitleText": "cell"
+			}
+		},
+		{
+			"path": "pages/example/field",
+			"style": {
+				"navigationBarTitleText": "field"
+			}
 		}
 	],
 	"globalStyle": {

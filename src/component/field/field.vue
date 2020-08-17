@@ -16,7 +16,8 @@
       :focus="focus"
       :confirm-type="confirmType"
     />
-    <image v-if="showClearIcon" @touchstart.stop="onClear" src="/static/images/public/clear-btn.png" class="clear-btn" />
+    <icons v-if="showClearIcon" @touchstart.stop="onClear" name="guanbi" />
+    <!-- <image v-if="showClearIcon" @touchstart.stop="onClear" src="/static/images/public/clear-btn.png" class="clear-btn" /> -->
   </view>
 </template>
 

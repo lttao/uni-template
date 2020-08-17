@@ -1,5 +1,5 @@
 <template>
-  <view class="u-collapse">
+  <view class="collapse">
     <slot />
   </view>
 </template>
@@ -14,12 +14,12 @@
  * @property {String} arrow-color 标题右侧箭头的颜色（默认#909399）
  * @property {Object} head-style 标题自定义样式，对象形式
  * @property {Object} body-style 主体自定义样式，对象形式
- * @property {String} hover-class 样式类名，按下时有效（默认u-hover-class）
+ * @property {String} hover-class 样式类名，按下时有效（默认hover-class）
  * @event {Function} change 当前激活面板展开时触发(如果是手风琴模式，参数activeNames类型为String，否则为Array)
- * @example <u-collapse></u-collapse>
+ * @example <collapse></collapse>
  */
 export default {
-  name: 'u-collapse',
+  name: 'collapse',
   props: {
     // 是否手风琴模式
     accordion: {
@@ -60,12 +60,12 @@ export default {
     // 标题部分按压时的样式类，"none"为无效果
     hoverClass: {
       type: String,
-      default: 'u-hover-class'
+      default: 'hover-class'
     }
   },
   provide() {
     return {
-      uCollapse: this
+      collapse: this
     }
   },
   created() {

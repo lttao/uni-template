@@ -103,7 +103,6 @@ export default {
   },
   created() {
     ARRAY.push(this)
-    console.log(ARRAY)
   },
   destroyed() {
     ARRAY = ARRAY.filter((item) => item !== this)
@@ -211,7 +210,6 @@ export default {
     // 开始触摸
     touchstart() {},
     getActionRect() {
-      console.log(this.$getRect, '$getRect')
       this.$getRect('.swipe-action').then((res) => {
         this.movableAreaWidth = res.width
         // 等视图更新完后，再显示右边的可滑动按钮，防止这些按钮会"闪一下"
