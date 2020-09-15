@@ -13,6 +13,7 @@ function deepClone(obj) {
   }
   var o = isArray(obj) ? [] : {}
   for (const i in obj) {
+    // eslint-disable-next-line no-prototype-builtins
     if (obj.hasOwnProperty(i)) {
       o[i] = typeof obj[i] === 'object' ? deepClone(obj[i]) : obj[i]
     }
