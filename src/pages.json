@@ -35,6 +35,12 @@
 			"style": {
 				"navigationBarTitleText": "field"
 			}
+		},
+		{
+			"path": "pages/example/sku",
+			"style": {
+				"navigationBarTitleText": "sku"
+			}
 		}
 	],
 	"globalStyle": {

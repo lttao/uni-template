@@ -1,10 +1,32 @@
 page {
-	color: #222;
+	height: 100%;
+	background: #f4f4f4;
+	color: #1F1F1F;
 	font-size: 14px;
+}
+@font-face {
+    font-family: font;
+	src: url('/static/font/uni.ttf');
+}
+@font-face {
+    font-family: number-font;
+	font-display: swap;
+	src: url('https://at.alicdn.com/t/webfont_t60rwjtjz1c.eot'); /* IE9*/
+	src: url('https://at.alicdn.com/t/webfont_t60rwjtjz1c.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+	url('https://at.alicdn.com/t/webfont_t60rwjtjz1c.woff2') format('woff2'),
+	url('https://at.alicdn.com/t/webfont_t60rwjtjz1c.woff') format('woff'), /* chrome、firefox */
+	url('https://at.alicdn.com/t/webfont_t60rwjtjz1c.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+	url('https://at.alicdn.com/t/webfont_t60rwjtjz1c.svg#杨任东竹石体-Bold') format('svg'); /* iOS 4.1- */
+}
+.font {
+    font-family: 'font' !important;
+}
+.number-font {
+	font-family: 'number-font' !important;
 }
 
 // image height 不固定会出现加载时拉伸的bug
-image {
+/deep/image uni-image img {
 	width: 100%;
 	height: 100%;
 	display: block;
@@ -12,8 +34,15 @@ image {
 view {
 	box-sizing: border-box;
 }
+view text {
+	line-height: 1;
+}
 input {
 	font-size: 14px;
+}
+uni-label, label {
+	display: flex;
+	align-items: center;
 }
 // 复选框的样式
 uni-checkbox, checkbox {
@@ -21,55 +50,61 @@ uni-checkbox, checkbox {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	.wx-checkbox-input {
-		margin-right: 20rpx;
-		width: 30rpx;
-		height: 30rpx;
+	.uni-checkbox-input, .wx-checkbox-input {
+		margin: 0;
+		width: 36rpx;
+		height: 36rpx;
 		flex-shrink: 0;
 		border-radius: 50%;
 		border: 1px solid #f4f4f4;
 		box-sizing: border-box;
 		outline: 0;
 	}
-	.uni-checkbox-input.uni-checkbox-input-checked {
+	.uni-checkbox-input.uni-checkbox-input-checked, .wx-checkbox-input.wx-checkbox-input-checked {
 		background-color: $main-color;
 		border: 1px solid $main-color!important;
 		box-sizing: border-box;
 	}
-	.uni-checkbox-input.uni-checkbox-input-checked:before {
+	.uni-checkbox-input.uni-checkbox-input-checked:before, .wx-checkbox-input.wx-checkbox-input-checked:before {
 		font-size: 14px;
 		color: #fff;
 	}
-	.uni-checkbox-wrapper {
+	.uni-checkbox-wrapper, .wx-checkbox-wrapper {
 		width: 100%;
 	}
 }
   
 // 单选框
-uni-radio radio {
-	.wx-radio-input {
+uni-radio, radio {
+	display: flex;
+	align-items: center;
+	.uni-radio-input, .wx-radio-input {
 		position: relative;
-		margin-right: 10rpx;
-		width: 30rpx;
-		height: 30rpx;
+		margin: 0!important;
+		width: 36rpx;
+		height: 36rpx;
 		border-radius: 50%;
 		border: 1px solid #f4f4f4;
 		box-sizing: border-box;
 		appearance: none;
 		outline: 0;
 	}
-	.uni-radio-input.uni-radio-input-checked {
+	.uni-radio-input.uni-radio-input-checked, .wx-radio-input.wx-radio-input-checked {
 		background-color: $main-color!important;
 		border: 1rpx solid $main-color!important;
 		box-sizing: border-box;
 	}
-	.uni-radio-input.uni-radio-input-checked:before {
+	.uni-radio-input.uni-radio-input-checked:before, .wx-radio-input.wx-radio-input-checked:before {
 		font-size: 14px;
 		color: #fff;
 	}
 }
+uni-textarea, textarea {
+	width: 100%;
+}
 // h5 加载
 uni-toast .uni-toast {
+    z-index: 10090;
 	width: 200rpx;
 	height: 200rpx;
 	display: flex;
@@ -85,15 +120,6 @@ uni-toast .uni-toast {
 		padding-top: 10rpx;
 	}
 }
-
-
-/* start--提升H5端uni.toast()的层级，避免被uView的modal等遮盖--start */
-/* #ifdef H5 */
-uni-toast {
-    z-index: 10090;
+.input-placeholder {
+	color: #949AA6;
 }
-uni-toast .uni-toast {
-   z-index: 10090;
-}
-/* #endif */
-/* end--提升H5端uni.toast()的层级，避免被uView的modal等遮盖--end */

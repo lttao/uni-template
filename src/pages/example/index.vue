@@ -12,6 +12,9 @@
     <navigator url="/pages/example/field">
       <cell-item title="field"></cell-item>
     </navigator>
+    <navigator url="/pages/example/sku">
+      <cell-item title="sku"></cell-item>
+    </navigator>
   </view>
 </template>
 
