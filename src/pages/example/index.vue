@@ -15,6 +15,9 @@
     <navigator url="/pages/example/sku">
       <cell-item title="sku"></cell-item>
     </navigator>
+    <navigator url="/pages/example/api">
+      <cell-item title="api"></cell-item>
+    </navigator>
   </view>
 </template>
 

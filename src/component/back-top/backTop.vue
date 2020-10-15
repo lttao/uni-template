@@ -14,9 +14,9 @@
       customStyle
     ]"
   >
-    <view class="u-back-top__content" v-if="!$slots.default">
+    <view class="u-back-top-content" v-if="!$slots.default">
       <u-icon @click="backToTop" :name="icon" :custom-style="iconStyle"></u-icon>
-      <view class="u-back-top__content__tips">
+      <view class="u-back-top-content-tips">
         {{ tips }}
       </view>
     </view>
@@ -144,12 +144,12 @@ export default {
   align-items: center;
   transition: opacity 0.4s;
 
-  &__content {
+  &-content {
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    &__tips {
+    &-tips {
       font-size: 24rpx;
       transform: scale(0.8);
       line-height: 1;

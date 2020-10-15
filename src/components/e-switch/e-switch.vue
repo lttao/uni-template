@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import eLoadingIcon from '../e-loading-icon/e-loading-icon.vue'
+import { eLoadingIcon } from '../index.js'
 export default {
   name: 'e-switch',
   components: {

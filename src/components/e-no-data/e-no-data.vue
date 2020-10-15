@@ -18,7 +18,7 @@ export default {
     },
     noDataUrl: {
       type: String,
-      default: '/static/images/user/no-data.png'
+      default: '/static/images/logo.png'
     },
     noDataSize: {
       type: [String, Number]

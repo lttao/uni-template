@@ -1,6 +1,18 @@
 {
 	"pages": [
 		{
+			"path": "pages/tab-bar/components",
+			"style": {
+				"navigationBarTitleText": "组件"
+			}
+		},
+		{
+			"path": "pages/tab-bar/api",
+			"style": {
+				"navigationBarTitleText": "API"
+			}
+		},
+		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "template"
@@ -41,8 +53,35 @@
 			"style": {
 				"navigationBarTitleText": "sku"
 			}
+		},
+		{
+			"path": "pages/example/api",
+			"style": {
+				"navigationBarTitleText": "api"
+			}
 		}
 	],
+	"tabBar": {
+        "color": "#7b7b7b",
+        "selectedColor": "#129aee",
+        "fontSize": "11px",
+        "iconWidth": "30px",
+        "spacing": "4px",
+        "list": [
+            {
+                "pagePath": "pages/tab-bar/components",
+                "iconPath": "static/images/tab-bar/1.png",
+                "selectedIconPath": "static/images/tab-bar/1-checked.png",
+                "text": "组件"
+            },
+            {
+                "pagePath": "pages/tab-bar/api",
+                "iconPath": "static/images/tab-bar/2.png",
+                "selectedIconPath": "static/images/tab-bar/2-checked.png",
+                "text": "API"
+            }
+        ]
+    },
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

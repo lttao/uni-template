@@ -1,6 +1,6 @@
 import { BASE } from './const.js'
 import { ignoreTokenApi } from './config.js'
-import { getToken, removeToken } from '@/util/storege'
+import { getToken, removeToken } from '@/util'
 
 const BASEURL = BASE // 网络端口
 const TIMEOUT = 10000 // 网络超时

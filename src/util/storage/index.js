@@ -71,4 +71,4 @@ class StorageUtil {
   }
 }
 
-export const storageUtil = new StorageUtil()
+export default new StorageUtil()

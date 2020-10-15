@@ -13,7 +13,7 @@
     class="drawer"
     hover-stop-propagation
   >
-    <pop-mask :custom-style="maskCustomStyle" :maskClickAble="maskCloseAble" :z-index="uZindex - 2" :show="showDrawer && mask" @click="maskClick"></pop-mask>
+    <e-mask :custom-style="maskCustomStyle" :maskClickAble="maskCloseAble" :z-index="uZindex - 2" :show="showDrawer && mask" @click="maskClick" />
     <view
       class="drawer-content"
       @tap="modeCenterClose(mode)"
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import popMask from '../mask/mask.vue'
+import eMask from '../e-mask/e-mask.vue'
 function number(value) {
   return /^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(value)
 }
@@ -51,7 +51,7 @@ function addUnit(value = 'auto', unit = 'rpx') {
 export default {
   name: 'e-popup',
   components: {
-    popMask
+    eMask
   },
   props: {
     // 显示状态

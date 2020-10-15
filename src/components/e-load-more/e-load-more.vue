@@ -5,7 +5,7 @@
     <!-- 加载中 -->
     <view v-show="status === 'loading'">
       <view :style="loadingStyle" class="loading">
-        <loading-icon size="36rpx"></loading-icon>
+        <e-loading-icon size="36rpx"></e-loading-icon>
         <view class="loading-text">加载中...</view>
       </view>
     </view>
@@ -22,19 +22,23 @@
     </view>
     <!-- 暂无数据 -->
     <slot v-if="status === 'noData'" name="noData">
-      <no-data :no-data-url="noDataUrl" :no-data-size="noDataSize" :no-data-height="noDataHeight" :noDataText="noDataText">
-        <slot name="no-data"></slot>
-      </no-data>
+      <e-no-data :e-no-data-url="noDataUrl" :e-no-data-size="noDataSize" :e-no-data-height="noDataHeight" :noDataText="noDataText">
+        <slot name="e-no-data"></slot>
+      </e-no-data>
     </slot>
   </view>
 </template>
 
 <script>
-import eLoadingIcon from '../e-loading-icon/e-loading-icon.vue'
-import noData from '../e-no-data/e-no-data.vue'
+import eLoadingIcon from '../e-loading-icon/e-loading-icon'
+import eNoData from '../e-no-data/e-no-data.vue'
 
 export default {
   name: 'e-load-more',
+  components: {
+    eLoadingIcon,
+    eNoData
+  },
   props: {
     status: {
       type: String,
@@ -50,7 +54,7 @@ export default {
     },
     noDataUrl: {
       type: String,
-      default: '/static/images/user/no-data.png'
+      default: '/static/images/logo.png'
     },
     noDataText: {
       type: String,
@@ -72,10 +76,6 @@ export default {
       type: Number,
       default: 80
     }
-  },
-  components: {
-    loadingIcon,
-    noData
   },
   computed: {
     heightStyle() {

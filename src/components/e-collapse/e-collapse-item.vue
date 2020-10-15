@@ -142,8 +142,6 @@ export default {
     },
     // 查询内容高度
     queryRect() {
-      // $uGetRect为uView自带的节点查询简化方法，详见文档介绍：https://www.uviewui.com/js/getRect.html
-      // 组件内部一般用this.$uGetRect，对外的为this.$u.getRect，二者功能一致，名称不同
       this.$getRect('#' + this.contentId).then((res) => {
         this.height = res.height
       })

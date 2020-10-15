@@ -1,0 +1,85 @@
+// 全局颜色
+$e-default: #333;
+$e-primary: blue;
+$e-success: green;
+$e-fail: red;
+$e-bg-color: #f2f2f2;
+$e-page-margin: 30rpx;
+$e-page-padding: 30rpx;
+
+// 公用样式
+.e-flex {
+    display: flex;
+}
+.e-flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.e-row-start {
+    justify-content: flex-start;
+}
+.e-row-center {
+    justify-content: center;
+}
+.e-row-end {
+    justify-content: flex-end;
+}
+.e-row-between {
+    justify-content: space-between;
+}
+.e-row-around {
+    justify-content: space-around;
+}
+
+.e-col-start {
+    align-items: flex-start;
+}
+.e-col-center {
+    align-items: center;
+}
+.e-col-end {
+    align-items: flex-end;
+}
+
+.e-flex-1 {
+    flex: 1;
+}
+
+.e-row-margin {
+    margin: 0 $e-page-margin;
+}
+.e-col-margin {
+    margin: $e-page-margin 0;
+}
+.e-top-margin {
+    margin-top: $e-page-margin;
+}
+.e-right-margin {
+    margin-right: $e-page-margin;
+}
+.e-bottom-margin {
+    margin-bottom: $e-page-margin;
+}
+.e-left-margin {
+    margin-left: $e-page-margin;
+}
+
+.e-row-padding {
+    padding: 0 $e-page-padding;
+}
+.e-col-padding {
+    padding: $e-page-padding 0;
+}
+.e-top-padding {
+    padding-top: $e-page-padding;
+}
+.e-right-padding {
+    padding-right: $e-page-padding;
+}
+.e-bottom-padding {
+    padding-bottom: $e-page-padding;
+}
+.e-left-padding {
+    padding-left: $e-page-padding;
+}

@@ -37,12 +37,14 @@
 </template>
 
 <script>
-import eIcon from '@/components/e-icon/e-icon.vue'
+import eIcon from '../e-icon/e-icon.vue'
+import mixin from '../e-mixin/index.js'
 export default {
   name: 'e-image',
   components: {
     eIcon
   },
+  mixins: [mixin],
   props: {
     // 图片地址
     src: {
@@ -205,14 +207,6 @@ export default {
       this.backgroundStyle = {
         backgroundColor: 'transparent'
       }
-    },
-    addUnit(value = 'auto', unit = 'rpx') {
-      value = String(value)
-      return this.number(value) ? `${value}${unit}` : value
-    },
-    // 验证十进制数字
-    number(value) {
-      return /^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(value)
     }
   }
 }
