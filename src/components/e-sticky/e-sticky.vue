@@ -7,7 +7,7 @@
       :class="[elClass]"
       :style="{
         height: fixed ? height + 'px' : 'auto',
-        backgroundColor: bgColor
+        backgroundColor: background
       }"
     >
       <view
@@ -53,7 +53,7 @@ export default {
       default: 44
     },
     // 吸顶区域的背景颜色
-    bgColor: {
+    background: {
       type: String,
       default: '#ffffff'
     },
@@ -88,7 +88,7 @@ export default {
   },
   computed: {
     uZIndex() {
-      return this.zIndex ? this.zIndex : 99999999999
+      return this.zIndex ? this.zIndex : 99
     }
   },
   created() {
@@ -152,6 +152,6 @@ export default {
 /** @format */
 
 .sticky {
-  z-index: 9999999999;
+  z-index: 99;
 }
 </style>

@@ -8,8 +8,10 @@
 </template>
 
 <script>
+import mixin from '../e-mixin/index.js'
 export default {
   name: 'icon',
+  mixins: [mixin],
   props: {
     // 图标类名
     name: {
@@ -78,15 +80,6 @@ export default {
   methods: {
     click() {
       this.$emit('click', this.index)
-    },
-    // 添加单位，如果有rpx，%，px等单位结尾或者值为auto，直接返回，否则加上rpx单位结尾
-    addUnit(value = 'auto', unit = 'rpx') {
-      value = String(value)
-      return this.number(value) ? `${value}${unit}` : value
-    },
-    // 验证十进制数字
-    number(value) {
-      return /^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(value)
     }
   }
 }

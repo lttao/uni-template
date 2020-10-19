@@ -21,7 +21,10 @@
       }"
     >
       <slot v-if="$slots.loading" name="loading" />
-      <e-icon v-else name="https://fanyi-cdn.cdn.bcebos.com/static/translation/img/header/logo_40c4f13.svg" :width="width" :height="height"></e-icon>
+      <e-icon v-else-if="loadingIcon" :name="loadingIcon" :width="width" :height="height"></e-icon>
+      <view v-else class="flex row-center col-center">
+        <e-loading-icon :size="addUnit(loadingSize)"></e-loading-icon>
+      </view>
     </view>
     <view
       v-if="showError && isError && !loading"
@@ -38,11 +41,13 @@
 
 <script>
 import eIcon from '../e-icon/e-icon.vue'
+import eLoadingIcon from '../e-loading-icon/e-loading-icon.vue'
 import mixin from '../e-mixin/index.js'
 export default {
   name: 'e-image',
   components: {
-    eIcon
+    eIcon,
+    eLoadingIcon
   },
   mixins: [mixin],
   props: {
@@ -89,7 +94,12 @@ export default {
     // 加载中的图标，或者小图片
     loadingIcon: {
       type: String,
-      default: 'photo'
+      default: ''
+      // default: 'https://fanyi-cdn.cdn.bcebos.com/static/translation/img/header/logo_40c4f13.svg'
+    },
+    loadingSize: {
+      type: [String, Number],
+      default: 40
     },
     // 加载失败的图标，或者小图片
     errorIcon: {
@@ -213,6 +223,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '@/common/scss/elegant-ui.scss';
 .e-image {
   position: relative;
   transition: opacity 0.5s ease-in-out;

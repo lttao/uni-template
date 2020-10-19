@@ -133,49 +133,46 @@
   /* end--Retina 屏幕下的 1px 边框--end */
   
   /* start--flex--start */
-  .flex {
-	  // #ifndef APP-NVUE
-	  display: flex;
-	  // #endif
-  }
-  .flex-col {
-	  // #ifndef APP-NVUE
-	  display: flex;
-	  // #endif
-	  flex-direction: column;
-  }
-  .flex-wrap {
-	  flex-wrap: wrap;
-  }
-  .col-center {
-	  align-items: center;
-  }
-  .col-top {
-	  align-items: flex-start;
-  }
-  .col-bottom {
-	  align-items: flex-end;
-  }
-  .row-left {
-	  justify-content: flex-start;
-  }
-  
-  .row-right {
-	  justify-content: flex-end;
-  }
-  
-  .row-between {
-	  justify-content: space-between;
-  }
-  
-  .row-around {
-	  justify-content: space-around;
-  }
-  .flex-1 {
-	  flex: 1;
-  }
-  .flex-shrink {
-	  flex-shrink: 0;
-  }
+  // 公用样式
+.flex {
+  display: flex;
+}
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.row-start {
+  justify-content: flex-start;
+}
+.row-center {
+  justify-content: center;
+}
+.row-end {
+  justify-content: flex-end;
+}
+.row-between {
+  justify-content: space-between;
+}
+.row-around {
+  justify-content: space-around;
+}
+
+.col-start {
+  align-items: flex-start;
+}
+.col-center {
+  align-items: center;
+}
+.col-end {
+  align-items: flex-end;
+}
+
+.flex-1 {
+  flex: 1;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
   /* start--flex--start */
   

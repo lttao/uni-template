@@ -13,6 +13,34 @@
 			}
 		},
 		{
+			"path": "pages/components/icon",
+			"style": {
+				"navigationBarTitleText": "Icon"
+			}
+		},
+		{
+			"path": "pages/components/loading-icon",
+			"style": {
+				"navigationBarTitleText": "Icon"
+			}
+		},
+		{
+			"path": "pages/components/image",
+			"style": {
+				"navigationBarTitleText": "Image"
+			}
+		},
+		{
+			"path": "pages/components/sticky",
+			"style": {
+				"navigationBarTitleText": "Sticky"
+			}
+		},
+
+
+
+
+		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "template"
