@@ -18,17 +18,18 @@
       :focus="focus"
       :confirm-type="confirmType"
     />
-    <!-- <e-icon v-if="showClearIcon" @touchstart.stop="onClear" :size="clearSize" name="guanbi" /> -->
-    <image v-if="showClearIcon" @touchstart.stop="onClear" :style="{ width: clearSize, height: clearSize }" src="/static/images/public/clear.png" class="clear-btn" />
+    <view v-if="showClearIcon" @touchstart.stop="onClear" class="clear-btn">
+      <e-icon :size="clearSize" name="guanbi" color="#ccc" />
+    </view>
   </view>
 </template>
 
 <script>
-// import eIcon from '../e-icon/e-icon'
+import eIcon from '../e-icon/e-icon'
 export default {
   name: 'e-input',
   components: {
-    // eIcon
+    eIcon
   },
   props: {
     value: {
@@ -72,8 +73,8 @@ export default {
       default: 'done'
     },
     clearSize: {
-      type: String,
-      default: '40rpx'
+      type: [String, Number],
+      default: 36
     }
   },
   data() {

@@ -6,8 +6,7 @@
       class="e-sticky-wrap"
       :class="[elClass]"
       :style="{
-        height: fixed ? height + 'px' : 'auto',
-        backgroundColor: background
+        height: fixed ? height + 'px' : 'auto'
       }"
     >
       <view
@@ -42,7 +41,7 @@ export default {
       type: [Number, String],
       default: ''
     },
-    // 是否开启吸顶功能
+    // 是否开启吸顶功能 产生报错（在onshow 更改此值为 true onhide 变为 false）
     enable: {
       type: Boolean,
       default: true
@@ -51,11 +50,6 @@ export default {
     h5NavHeight: {
       type: [Number, String],
       default: 44
-    },
-    // 吸顶区域的背景颜色
-    background: {
-      type: String,
-      default: '#ffffff'
     },
     // z-index值
     zIndex: {
@@ -120,7 +114,7 @@ export default {
     observeContent() {
       this.disconnectObserver('contentObserver')
       const contentObserver = this.createIntersectionObserver({
-        thresholds: [0.95, 0.98, 1]
+        thresholds: [0, 0.5, 1]
       })
       contentObserver.relativeToViewport({
         top: -this.stickyTop

@@ -2,7 +2,7 @@
 
 <template>
   <button @click="onClick" :hover-class="hoverClass" :open-type="openType" :style="style" :class="{ disabled: disabled, plain }" class="e-button">
-    <e-loading-icon v-if="loading" :type="loadingType" />
+    <e-loading-icon v-if="loading" :type="loadingType" :size="loadingIconSize" />
     <slot v-else></slot>
     <view v-if="loading && mask" @touchmove.stop.prevent :style="{ zIndex: zIndex }" class="mask no-move"></view>
   </button>
@@ -10,9 +10,11 @@
 
 <script>
 import eLoadingIcon from '../e-loading-icon/e-loading-icon'
+import mixin from '../e-mixin/index.js'
 
 export default {
   name: 'e-button',
+  mixins: [mixin],
   components: {
     eLoadingIcon
   },
@@ -26,6 +28,10 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    loadingSize: {
+      type: [String, Number],
+      default: 0
     },
     // 大小
     size: {
@@ -66,6 +72,21 @@ export default {
     zIndex: {
       type: Number,
       default: 99
+    },
+    // 按钮最小宽度
+    width: {
+      type: [Number, String],
+      default: ''
+    },
+    // 按钮高度
+    height: {
+      type: [Number, String],
+      default: ''
+    },
+    // 按钮圆角
+    radius: {
+      type: [Number, String],
+      default: ''
     }
   },
   computed: {
@@ -85,9 +106,21 @@ export default {
       if (plain) return type
       return 'white'
     },
+    loadingIconSize() {
+      const { size, loadingSize } = this
+      if (loadingSize) return loadingSize
+      switch (size) {
+        case 'middle':
+          return 36
+        case 'mini':
+          return 30
+        default:
+          return 44
+      }
+    },
     style() {
       const style = {}
-      const { type, plain, size } = this
+      const { type, plain, size, width, height, radius, addUnit } = this
       switch (type) {
         case 'primary':
           style.background = '#00B1F1'
@@ -127,17 +160,17 @@ export default {
       switch (size) {
         case 'middle':
           style.width = 'auto'
-          style.minWidth = '324rpx'
-          style.height = '88rpx'
-          style.borderRadius = '12rpx'
+          style.minWidth = width ? addUnit(width) : '324rpx'
+          style.height = height ? addUnit(height) : '80rpx'
+          style.borderRadius = radius || Number(radius || 0) === 0 ? addUnit(radius) : '12rpx'
           style.display = 'inline-flex'
           style.fontSize = '16px'
           break
         case 'mini':
           style.width = 'auto'
-          style.minWidth = '136rpx'
-          style.height = '56rpx'
-          style.borderRadius = '8rpx'
+          style.minWidth = width ? addUnit(width) : '136rpx'
+          style.height = height ? addUnit(height) : '56rpx'
+          style.borderRadius = radius || Number(radius || 0) === 0 ? addUnit(radius) : '8rpx'
           style.display = 'inline-flex'
           style.fontSize = '12px'
           break

@@ -5,7 +5,7 @@
     <!-- 加载中 -->
     <view v-show="status === 'loading'">
       <view :style="loadingStyle" class="loading">
-        <e-loading-icon size="36rpx"></e-loading-icon>
+        <e-loading-icon :size="34"></e-loading-icon>
         <view class="loading-text">加载中...</view>
       </view>
     </view>
@@ -22,7 +22,7 @@
     </view>
     <!-- 暂无数据 -->
     <slot v-if="status === 'noData'" name="noData">
-      <e-no-data :e-no-data-url="noDataUrl" :e-no-data-size="noDataSize" :e-no-data-height="noDataHeight" :noDataText="noDataText">
+      <e-no-data :no-data-url="noDataUrl" :no-data-size="noDataSize" :no-data-height="noDataHeight" :no-data-text="noDataText">
         <slot name="e-no-data"></slot>
       </e-no-data>
     </slot>
@@ -49,12 +49,10 @@ export default {
       default: '没有更多了'
     },
     noDataSize: {
-      type: [String, Number],
-      default: ''
+      type: [String, Number]
     },
     noDataUrl: {
-      type: String,
-      default: '/static/images/logo.png'
+      type: String
     },
     noDataText: {
       type: String,

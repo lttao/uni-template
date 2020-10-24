@@ -1,9 +1,11 @@
 <template>
-  <image v-if="type === 'primary'" src="/static/images/components/loading/primary.gif" :style="{ width: addUnit(size), height: addUnit(size) }" mode="aspectFit" class="e-loading-icon" />
-  <image v-else-if="type === 'error'" src="/static/images/components/loading/error.gif" :style="{ width: addUnit(size), height: addUnit(size) }" mode="aspectFit" class="e-loading-icon" />
-  <image v-else-if="type === 'success'" src="/static/images/components/loading/success.gif" :style="{ width: addUnit(size), height: addUnit(size) }" mode="aspectFit" class="e-loading-icon" />
-  <image v-else-if="type === 'white'" src="/static/images/components/loading/white.gif" :style="{ width: addUnit(size), height: addUnit(size) }" mode="aspectFit" class="e-loading-icon" />
-  <image v-else src="/static/images/components/loading/default.gif" :style="{ width: addUnit(size), height: addUnit(size) }" mode="aspectFit" class="e-loading-icon" />
+  <view v-show="show">
+    <image v-if="type === 'primary'" src="/static/images/components/loading/primary.gif" :style="{ width: addUnit(size), height: addUnit(size) }" mode="aspectFit" class="e-loading-icon" />
+    <image v-else-if="type === 'error'" src="/static/images/components/loading/error.gif" :style="{ width: addUnit(size), height: addUnit(size) }" mode="aspectFit" class="e-loading-icon" />
+    <image v-else-if="type === 'success'" src="/static/images/components/loading/success.gif" :style="{ width: addUnit(size), height: addUnit(size) }" mode="aspectFit" class="e-loading-icon" />
+    <image v-else-if="type === 'white'" src="/static/images/components/loading/white.gif" :style="{ width: addUnit(size), height: addUnit(size) }" mode="aspectFit" class="e-loading-icon" />
+    <image v-else src="/static/images/components/loading/default.gif" :style="{ width: addUnit(size), height: addUnit(size) }" mode="aspectFit" class="e-loading-icon" />
+  </view>
 </template>
 
 <script>
@@ -12,6 +14,10 @@ export default {
   name: 'e-loading-icon',
   mixins: [mixin],
   props: {
+    show: {
+      type: Boolean,
+      default: true
+    },
     type: {
       type: String,
       default: 'default'

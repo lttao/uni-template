@@ -21,7 +21,19 @@
 		{
 			"path": "pages/components/loading-icon",
 			"style": {
-				"navigationBarTitleText": "Icon"
+				"navigationBarTitleText": "Loading-icon"
+			}
+		},
+		{
+			"path": "pages/components/load-more",
+			"style": {
+				"navigationBarTitleText": "Load-more"
+			}
+		},
+		{
+			"path": "pages/components/button",
+			"style": {
+				"navigationBarTitleText": "Button"
 			}
 		},
 		{
@@ -31,9 +43,27 @@
 			}
 		},
 		{
+			"path": "pages/components/input",
+			"style": {
+				"navigationBarTitleText": "Input"
+			}
+		},
+		{
 			"path": "pages/components/sticky",
 			"style": {
 				"navigationBarTitleText": "Sticky"
+			}
+		},
+		{
+			"path": "pages/components/switch",
+			"style": {
+				"navigationBarTitleText": "Switch"
+			}
+		},
+		{
+			"path": "pages/components/swiper-action",
+			"style": {
+				"navigationBarTitleText": "Swiper-action"
 			}
 		},
 

@@ -3,8 +3,8 @@
     <view
       class="e-switch-node node-class"
       :style="{
-        width: $addUnit(this.size),
-        height: $addUnit(this.size)
+        width: addUnit(this.size),
+        height: addUnit(this.size)
       }"
     >
       <e-loading-icon :show="loading" class="e-switch-loading" :size="size * 0.6" />
@@ -13,9 +13,11 @@
 </template>
 
 <script>
-import { eLoadingIcon } from '../index.js'
+import eLoadingIcon from '../e-loading-icon/e-loading-icon.vue'
+import mixin from '../e-mixin/index.js'
 export default {
   name: 'e-switch',
+  mixins: [mixin],
   components: {
     eLoadingIcon
   },
@@ -53,7 +55,7 @@ export default {
     // 是否使手机发生短促震动，目前只在iOS的微信小程序有效(2020-05-06)
     vibrateShort: {
       type: Boolean,
-      default: false
+      default: true
     },
     // 打开选择器时的值
     activeValue: {
@@ -82,23 +84,15 @@ export default {
   },
   methods: {
     onClick() {
-      if (!this.disabled && !this.loading) {
+      const { disabled, loading } = this
+      if (!disabled && !loading) {
+        const { vibrateShort, value, activeValue, inactiveValue } = this
+        this.$emit('input', !value)
+        this.$emit('change', !value ? activeValue : inactiveValue)
+
         // 使手机产生短促震动，微信小程序有效，APP(HX 2.6.8)和H5无效
-        if (this.vibrateShort) uni.vibrateShort()
-        this.$emit('input', !this.value)
-        // 放到下一个生命周期，因为双向绑定的value修改父组件状态需要时间，且是异步的
-        this.$nextTick(() => {
-          this.$emit('change', this.value ? this.activeValue : this.inactiveValue)
-        })
+        if (vibrateShort) uni.vibrateShort()
       }
-    },
-    addUnit(value = 'auto', unit = 'rpx') {
-      value = String(value)
-      return this.number(value) ? `${value}${unit}` : value
-    },
-    // 验证十进制数字
-    number(value) {
-      return /^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(value)
     }
   }
 }
