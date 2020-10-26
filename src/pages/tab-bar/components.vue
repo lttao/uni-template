@@ -23,13 +23,13 @@ export default {
         { url: '/pages/components/button', title: 'Button', desc: '按钮' },
         { url: '/pages/components/image', title: 'Image', desc: '图片' },
         { url: '/pages/components/input', title: 'Input', desc: '输入框' },
-        { url: '/pages/components/icon', title: 'Mask', desc: '蒙层', titleStyle: { color: 'red' } },
+        { url: '/pages/components/mask', title: 'Mask', desc: '蒙层' },
         { url: '/pages/components/icon', title: 'Popup', desc: '弹出层', titleStyle: { color: 'red' } },
         { url: '/pages/components/icon', title: 'Modal', desc: '确认框', titleStyle: { color: 'red' } },
         { url: '/pages/components/sticky', title: 'Sticky', desc: '吸顶' },
         { url: '/pages/components/switch', title: 'Switch', desc: '开关' },
         { url: '/pages/components/swiper-action', title: 'Swiper-action', desc: '滑动操作' },
-        { url: '/pages/components/icon', title: 'Tabs', desc: '切换', titleStyle: { color: 'red' } }
+        { url: '/pages/components/tabs', title: 'Tabs', desc: '切换' }
       ]
     }
   }

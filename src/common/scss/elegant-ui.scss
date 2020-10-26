@@ -83,3 +83,9 @@ $e-page-padding: 30rpx;
 .e-left-padding {
     padding-left: $e-page-padding;
 }
+
+.e-line-1 {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

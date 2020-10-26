@@ -2,7 +2,7 @@
 
 <template>
   <view
-    class="mask"
+    class="e-mask"
     hover-stop-propagation
     :style="[maskStyle, zoomStyle]"
     @tap="click"
@@ -76,7 +76,7 @@ export default {
     maskStyle() {
       let style = {}
       style.backgroundColor = 'rgba(0, 0, 0, 0.6)'
-      if (this.show) style.zIndex = this.zIndex ? this.zIndex : 999999
+      if (this.show) style.zIndex = this.zIndex ? this.zIndex : 99
       else style.zIndex = -1
       style.transition = `all ${this.duration / 1000}s ease-in-out`
       // 判断用户传递的对象是否为空，不为空就进行合并
@@ -96,7 +96,7 @@ export default {
 <style lang="scss" scoped>
 /** @format */
 
-.mask {
+.e-mask {
   position: fixed;
   top: 0;
   left: 0;

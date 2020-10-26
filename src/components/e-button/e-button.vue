@@ -66,7 +66,7 @@ export default {
     // 是否需要 mask
     mask: {
       type: Boolean,
-      default: true
+      default: false
     },
     // mask 层级
     zIndex: {

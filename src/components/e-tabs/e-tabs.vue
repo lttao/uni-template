@@ -1,35 +1,40 @@
 <template>
-  <view
-    class="e-tabs"
-    :style="{
-      background: bgColor
-    }"
-  >
-    <!-- $getRect()对组件根节点无效，因为写了.in(this)，故这里获取内层接点尺寸 -->
-    <view :id="id">
-      <scroll-view scroll-x class="e-scroll-view" :scroll-left="scrollLeft" scroll-with-animation>
-        <view class="e-scroll-box" :class="{ 'e-tabs-scorll-flex': !isScroll }">
-          <view class="e-tab-item line-1" :id="'e-tab-item-' + index" v-for="(item, index) in list" :key="index" @tap="clickTab(index)" :style="[tabItemStyle(index)]">
-            {{ item | itemFormat(name) }}
+  <e-sticky :enable="sticky" :offsetTop="offsetTop" :h5NavHeight="h5NavHeight">
+    <view class="e-tabs" :style="{ height: addUnit(height) }">
+      <view :style="mianStyle">
+        <scroll-view scroll-x class="e-scroll-view" :scroll-left="scrollLeft" scroll-with-animation>
+          <view class="e-scroll-box" :style="{ height: addUnit(height) }" :class="{ 'e-tabs-scorll-flex': !scroll }">
+            <block v-for="(item, index) in list" :key="index">
+              <view @click="clickTab(index)" :style="tabItemStyle(index)" class="e-tab-item line-1">
+                {{ item | itemFormat(listKey) }}
+              </view>
+            </block>
+
+            <!-- tab 样式 -->
+            <view :style="tabLineStyle" class="e-tab-line">
+              <slot name="tab-line">
+                <view :style="{ width: addUnit(lineWidth), height: addUnit(lineHeight), background: activeColor }"></view>
+              </slot>
+            </view>
           </view>
-          <view v-if="showBar" class="e-tab-bar" :style="[tabBarStyle]"></view>
-        </view>
-      </scroll-view>
+        </scroll-view>
+      </view>
     </view>
-  </view>
+  </e-sticky>
 </template>
 
 <script>
+import mixin from '../e-mixin/index.js'
+import eSticky from '../e-sticky/e-sticky.vue'
 export default {
   name: 'e-tabs',
+  mixins: [mixin],
+  components: {
+    eSticky
+  },
   props: {
-    // id值
-    id: {
-      type: String,
-      default: 'e-tabs'
-    },
     // 导航菜单是否需要滚动，如只有2或者3个的时候，就不需要滚动了，此时使用flex平分tab的宽度
-    isScroll: {
+    scroll: {
       type: Boolean,
       default: true
     },
@@ -40,105 +45,88 @@ export default {
         return []
       }
     },
+    // 如果数据结构是对象，设置key
+    listKey: {
+      type: [String],
+      default: ''
+    },
     // 当前活动tab的索引
     current: {
       type: [Number, String],
       default: 0
     },
-    // 导航栏的高度和行高
+    // 高度
     height: {
       type: [String, Number],
       default: 80
     },
-    // 字体大小
-    fontSize: {
-      type: [String, Number],
-      default: 30
-    },
-    // 过渡动画时长, 单位ms
-    duration: {
-      type: [String, Number],
-      default: 0.5
-    },
-    // 选中项的主题颜色
-    activeColor: {
+    // 背景颜色
+    background: {
       type: String,
-      default: '#2979ff'
+      default: '#fff'
     },
-    // 未选中项的颜色
-    inactiveColor: {
-      type: String,
-      default: '#303133'
+    // 是否开启固定
+    fixed: {
+      type: Boolean,
+      default: false
     },
-    // 菜单底部移动的bar的宽度，单位rpx
-    barWidth: {
+    // 固定层级
+    zIndex: {
+      type: Number,
+      default: 99
+    },
+    // 是否吸顶
+    sticky: {
+      type: Boolean,
+      default: false
+    },
+    // 开启固定距离头部的高度
+    offsetTop: {
       type: [String, Number],
-      default: 40
+      default: 0
     },
-    // 移动bar的高度
-    barHeight: {
+    // H5导航栏高度
+    h5NavHeight: {
+      type: [String, Number],
+      default: 44
+    },
+    // 横线宽度
+    lineWidth: {
+      type: [String, Number],
+      default: '60%'
+    },
+    // 横线高度
+    lineHeight: {
       type: [String, Number],
       default: 6
     },
-    // 单个tab的左或有内边距（左右相同）
-    gutter: {
+    // 每一项的样式
+    itemStyle: {
+      type: Object,
+      default: () => ({})
+    },
+    // 默认颜色
+    defaultColor: {
+      type: String,
+      default: '#1a1a1a'
+    },
+    // 选中颜色
+    activeColor: {
+      type: String,
+      default: 'blue'
+    },
+    // 动画时间
+    duration: {
       type: [String, Number],
-      default: 20
-    },
-    // 导航栏的背景颜色
-    bgColor: {
-      type: String,
-      default: '#ffffff'
-    },
-    // 读取传入的数组对象的属性
-    name: {
-      type: String,
-      default: 'name'
-    },
-    // 活动tab字体是否加粗
-    bold: {
-      type: Boolean,
-      default: true
-    },
-    // 当前活动tab item的样式
-    activeItemStyle: {
-      type: Object,
-      default() {
-        return {}
-      }
-    },
-    // 是否显示底部的滑块
-    showBar: {
-      type: Boolean,
-      default: true
-    },
-    // 底部滑块的自定义样式
-    barStyle: {
-      type: Object,
-      default() {
-        return {}
-      }
-    },
-    // 标签的宽度
-    itemWidth: {
-      type: [Number, String],
-      default: 'auto'
+      default: 0.4
     }
   },
   data() {
     return {
-      scrollLeft: 0, // 滚动scroll-view的左边滚动距离
-      tabQueryInfo: [], // 存放对tab菜单查询后的节点信息
-      componentWidth: 0, // 屏幕宽度，单位为px
-      scrollBarLeft: 0, // 移动bar需要通过translateX()移动的距离
-      parentLeft: 0, // 父元素(tabs组件)到屏幕左边的距离
-      currentIndex: this.current,
-      barFirstTimeMove: true // 滑块第一次移动时(页面刚生成时)，无需动画，否则给人怪异的感觉
+      itemsDomInfo: []
     }
   },
   watch: {
-    // 监听tab的变化，重新计算tab菜单的布局信息，因为实际使用中菜单可能是通过
-    // 后台获取的（如新闻app顶部的菜单），获取返回需要一定时间，所以list变化时，重新获取布局信息
     list(n, o) {
       // list变动时，重制内部索引，否则可能导致超出数组边界的情况
       if (n.length !== o.length) this.currentIndex = 0
@@ -146,134 +134,96 @@ export default {
       this.$nextTick(() => {
         this.init()
       })
-    },
-    current: {
-      immediate: true,
-      handler(nVal, oVal) {
-        // 视图更新后再执行移动操作
-        this.$nextTick(() => {
-          this.currentIndex = nVal
-          this.scrollByIndex()
-        })
-      }
     }
   },
   computed: {
-    // 移动bar的样式
-    tabBarStyle() {
+    mianStyle() {
+      const { addUnit, height, fixed, background, offsetTop, zIndex } = this
       const style = {
-        width: this.barWidth + 'rpx',
-        transform: `translate(${this.scrollBarLeft}px, -100%)`,
-        // 滑块在页面渲染后第一次滑动时，无需动画效果
-        'transition-duration': `${this.barFirstTimeMove ? 0 : this.duration}s`,
-        'background-color': this.activeColor,
-        height: this.barHeight + 'rpx',
-        // 设置一个很大的值，它会自动取能用的最大值，不用高度的一半，是因为高度可能是单数，会有小数出现
-        'border-radius': `${this.barHeight / 2}px`
+        width: '100%',
+        height: addUnit(height),
+        background
       }
-      Object.assign(style, this.barStyle)
+      if (fixed) {
+        style.position = 'fixed'
+        style.zIndex = zIndex
+
+        // #ifdef H5
+        style.top = `${uni.upx2px(offsetTop) + this.h5NavHeight}px`
+        // #endif
+        // #ifndef H5
+        style.top = `${uni.upx2px(offsetTop)}px`
+        // #endif
+      }
       return style
     },
-    // tab的样式
     tabItemStyle() {
       return (index) => {
-        let style = {
-          height: this.height + 'rpx',
-          'line-height': this.height + 'rpx',
-          'font-size': this.fontSize + 'rpx',
-          'transition-duration': `${this.duration}s`,
-          padding: this.isScroll ? `0 ${this.gutter}rpx` : '',
-          flex: this.isScroll ? 'auto' : '1',
-          maxWidth: this.addUnit(this.itemWidth)
-        }
-        // 字体加粗
-        if (index === this.currentIndex && this.bold) style.fontWeight = 'bold'
-        if (index === this.currentIndex) {
-          style.color = this.activeColor
-          // 给选中的tab item添加外部自定义的样式
-          style = Object.assign(style, this.activeItemStyle)
-        } else {
-          style.color = this.inactiveColor
+        const { itemStyle, number, addUnit, height, current, defaultColor, activeColor, duration } = this
+        const style = {
+          ...itemStyle,
+          height: addUnit(height),
+          lineHeight: addUnit(height),
+          color: current === index ? activeColor : defaultColor,
+          transition: `all ${number(duration) ? `${duration}s` : duration}`
         }
         return style
       }
-    }
-  },
-  methods: {
-    // 设置一个init方法，方便多处调用
-    async init() {
-      // 获取tabs组件的尺寸信息
-      const tabRect = await this.$getRect('#' + this.id)
-      // tabs组件距离屏幕左边的宽度
-      this.parentLeft = tabRect.left
-      // tabs组件的宽度
-      this.componentWidth = tabRect.width
-      this.getTabRect()
     },
-    // 点击某一个tab菜单
-    clickTab(index) {
-      // 点击当前活动tab，不触发事件
-      if (index === this.currentIndex) return
-      // 发送事件给父组件
-      this.$emit('change', index)
-    },
-    // 查询tab的布局信息
-    getTabRect() {
-      // 创建节点查询
-      const query = uni.createSelectorQuery().in(this)
-      // 历遍所有tab，这里是执行了查询，最终使用exec()会一次性返回查询的数组结果
-      for (let i = 0; i < this.list.length; i++) {
-        // 只要size和rect两个参数
-        query.select(`#e-tab-item-${i}`).fields({
-          size: true,
-          rect: true
-        })
+    tabLineStyle() {
+      const { number, current, itemsDomInfo, duration } = this
+      let tabBarWidth = 0
+      let tabBarPosition = 0
+      const currentItemInfo = itemsDomInfo[current] // 当前选中item的DOM信息
+      if (currentItemInfo) {
+        tabBarWidth = currentItemInfo.width
+        tabBarPosition = currentItemInfo.left
       }
-      // 执行查询，一次性获取多个结果
-      query.exec(
-        function(res) {
-          this.tabQueryInfo = res
-          // 初始化滚动条和移动bar的位置
-          this.scrollByIndex()
-        }.bind(this)
-      )
-    },
-    // 滚动scroll-view，让活动的tab处于屏幕的中间位置
-    scrollByIndex() {
-      // 当前活动tab的布局信息，有tab菜单的width和left(为元素左边界到父元素左边界的距离)等信息
-      const tabInfo = this.tabQueryInfo[this.currentIndex]
-      if (!tabInfo) return
-      // 活动tab的宽度
-      const tabWidth = tabInfo.width
-      // 活动item的左边到tabs组件左边的距离，用item的left减去tabs的left
-      const offsetLeft = tabInfo.left - this.parentLeft
-      // 将活动的tabs-item移动到屏幕正中间，实际上是对scroll-view的移动
-      const scrollLeft = offsetLeft - (this.componentWidth - tabWidth) / 2
-      this.scrollLeft = scrollLeft < 0 ? 0 : scrollLeft
-      // 当前活动item的中点点到左边的距离减去滑块宽度的一半，即可得到滑块所需的移动距离
-      const left = tabInfo.left + tabInfo.width / 2 - this.parentLeft
-      // 计算当前活跃item到组件左边的距离
-      this.scrollBarLeft = left - uni.upx2px(this.barWidth) / 2
-      // 第一次移动滑块的时候，barFirstTimeMove为true，放到延时中将其设置false
-      // 延时是因为scrollBarLeft作用于computed计算时，需要一个过程需，否则导致出错
-      if (this.barFirstTimeMove === true) {
-        setTimeout(() => {
-          this.barFirstTimeMove = false
-        }, 100)
+      const style = {
+        width: `${tabBarWidth}px`,
+        transform: `translate3d(${tabBarPosition}px, 0, 0)`,
+        transition: `all ${number(duration) ? `${duration}s` : duration}`
       }
+      return style
     },
-    // 添加单位，如果有rpx，%，px等单位结尾或者值为auto，直接返回，否则加上rpx单位结尾
-    addUnit(value = 'auto', unit = 'rpx') {
-      value = String(value)
-      return this.number(value) ? `${value}${unit}` : value
-    },
-    // 验证十进制数字
-    number(value) {
-      return /^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(value)
+    scrollLeft() {
+      const { itemsDomInfo, current } = this
+      if (current <= 1) return 0
+
+      const currentItem = itemsDomInfo[current]
+      const frontItem = itemsDomInfo[current - 1]
+
+      if (currentItem && frontItem) return currentItem.left - frontItem.width
+
+      return 0
     }
   },
   mounted() {
     this.init()
+  },
+  methods: {
+    // 初始化数据
+    init() {
+      this.getDomInfo('.e-tab-item', true).then((res = []) => {
+        if (res.length) {
+          this.itemsDomInfo = res.map((e, i, arr) => {
+            return {
+              ...e,
+              left: e.left - arr[0].left
+            }
+          })
+
+          this.tabBarWidth = res[0].width
+        }
+      })
+    },
+    // 点击某一个tab菜单
+    clickTab(index) {
+      // 点击当前活动tab，不触发事件
+      if (index === this.current) return
+      // 发送事件给父组件
+      this.$emit('change', index)
+    }
   },
   filters: {
     itemFormat(item, key) {
@@ -290,9 +240,7 @@ scroll-view {
   box-sizing: border-box;
 }
 
-::-webkit-scrollbar,
-::-webkit-scrollbar,
-::-webkit-scrollbar {
+/deep/ ::-webkit-scrollbar {
   display: none;
   width: 0 !important;
   height: 0 !important;
@@ -324,13 +272,19 @@ scroll-view /deep/ ::-webkit-scrollbar {
 .e-tab-item {
   position: relative;
   display: inline-block;
+  padding: 0 20rpx;
   text-align: center;
   transition-property: background-color, color;
+  font-weight: bold;
 }
 
-.e-tab-bar {
+.e-tab-line {
   position: absolute;
   bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .e-tabs-scorll-flex {

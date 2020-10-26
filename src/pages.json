@@ -49,6 +49,12 @@
 			}
 		},
 		{
+			"path": "pages/components/mask",
+			"style": {
+				"navigationBarTitleText": "Mask"
+			}
+		},
+		{
 			"path": "pages/components/sticky",
 			"style": {
 				"navigationBarTitleText": "Sticky"
@@ -64,6 +70,12 @@
 			"path": "pages/components/swiper-action",
 			"style": {
 				"navigationBarTitleText": "Swiper-action"
+			}
+		},
+		{
+			"path": "pages/components/tabs",
+			"style": {
+				"navigationBarTitleText": "tabs"
 			}
 		},
 
