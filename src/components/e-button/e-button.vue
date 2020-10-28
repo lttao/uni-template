@@ -1,7 +1,7 @@
 <!-- @format -->
 
 <template>
-  <button @click="onClick" :hover-class="hoverClass" :open-type="openType" :style="style" :class="{ disabled: disabled, plain }" class="e-button">
+  <button @click="onClick" :hover-class="hoverClass" :open-type="openType" :style="[style]" :class="{ disabled: disabled, plain }" class="e-button">
     <e-loading-icon v-if="loading" :type="loadingType" :size="loadingIconSize" />
     <slot v-else></slot>
     <view v-if="loading && mask" @touchmove.stop.prevent :style="{ zIndex: zIndex }" class="mask no-move"></view>

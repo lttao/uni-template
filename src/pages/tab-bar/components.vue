@@ -3,7 +3,7 @@
     <e-cell icon="shezhi" title="Cell" :title-style="{ color: 'blue' }" label="此页面已展示" value="不可点击" desc="" :can-click="false" :arrow="false" />
 
     <block v-for="(item, index) in list" :key="index">
-      <e-cell @click="$toUrl(item.url)" :border="cellBorder(index)" />
+      <e-cell @click="$toUrl(item.url)" :url="item.url" :title="item.title" :desc="item.desc" :titleStyle="item.titleStyle" :border="cellBorder(index)" />
       <!-- <e-cell @click="$toUrl(item.url)" v-bind="item" :border="cellBorder(index)" /> -->
     </block>
   </view>

@@ -52,7 +52,7 @@
       <e-button size="mini" loading plain type="error">按钮</e-button>
     </view>
     <view style="padding-bottom: 40rpx;" class="flex flex-wrap">
-      <e-button size="mini" width="50%" :height="90" :radius="0" plain>按钮</e-button>
+      <e-button size="mini" :width="500" :height="90" :radius="0" plain>按钮</e-button>
       <e-button size="mini" :width="200" :height="50" :radius="0" plain type="primary">按钮</e-button>
     </view>
   </view>

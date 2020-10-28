@@ -117,13 +117,15 @@
 		}
 	],
 	"tabBar": {
+		// #ifdef APP-PLUS
 		"height": "55px",
-		"backgroundColor": "#f8f8f8",
-        "color": "#7b7b7b",
-        "selectedColor": "#129aee",
         "fontSize": "11px",
         "iconWidth": "26px",
         "spacing": "6px",
+		// #endif
+		"backgroundColor": "#f8f8f8",
+        "color": "#7b7b7b",
+        "selectedColor": "#129aee",
         "list": [
             {
                 "pagePath": "pages/tab-bar/components",

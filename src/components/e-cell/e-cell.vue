@@ -1,6 +1,6 @@
 <template>
   <view @click="click" class="e-cell">
-    <view :style="cellStyle" :hover-class="`${canClick && hoverClass}`" :class="{ 'e-cell-border': border }" class="e-flex e-col-center e-row-padding">
+    <view :style="[cellStyle]" :hover-class="`${canClick && hoverClass}`" :class="{ 'e-cell-border': border }" class="e-flex e-col-center e-row-padding">
       <view class="e-cell_left e-flex e-col-center e-flex-1">
         <!-- 图标 -->
         <e-icon v-if="icon" :name="icon" :size="iconSize" class="e-right-margin" />
@@ -22,7 +22,7 @@
         </view>
         <view>
           <text v-if="value" :style="valueStyle" class="e-cell-value">{{ value }}</text>
-          <text v-else class="e-cell-desc">{{ desc }}</text>
+          <text v-else class="e-cell-desc">{{ desc || '' }}</text>
         </view>
 
         <!-- 箭头 -->
@@ -34,8 +34,10 @@
 
 <script>
 import eIcon from '../e-icon/e-icon.vue'
+import mixin from '../e-mixin/index.js'
 export default {
   name: 'e-cell',
+  mixins: [mixin],
   components: {
     eIcon
   },
@@ -57,7 +59,7 @@ export default {
     },
     // 右侧提示内容
     desc: {
-      type: [String, Number],
+      type: [String, Number, Boolean],
       default: ''
     },
     // 标题下方的描述信息
@@ -119,7 +121,7 @@ export default {
     // 整体高度
     height: {
       type: [String, Number],
-      default: '100rpx'
+      default: 100
     },
     // 背景颜色
     background: {
@@ -142,9 +144,9 @@ export default {
   },
   computed: {
     cellStyle() {
-      const { height, background } = this
+      const { height, background, addUnit } = this
       const style = {
-        height,
+        height: addUnit(height),
         background
       }
       return style
@@ -187,13 +189,12 @@ export default {
   }
   &-border {
     position: relative;
-    overflow: hidden;
     &::after {
       content: '';
       position: absolute;
       left: $e-page-margin;
       bottom: 0;
-      width: 100%;
+      width: calc(100% - #{$e-page-margin});
       height: 1px;
       background: #e9e9e9;
       transform: scaleY(0.5);
@@ -201,6 +202,18 @@ export default {
   }
   .arrow {
     margin-left: 10rpx;
+  }
+}
+.cell-hover {
+  position: relative;
+  &::before {
+    content: ' ';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 750rpx;
+    height: 1px;
+    background: #e9e9e9;
   }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <view class="components">
     <block v-for="(item, index) in list" :key="index">
-      <e-cell @click="$toUrl(item.url)" v-bind="item" />
+      <e-cell @click="$toUrl(item.url)" :url="item.url" :title="item.title" :desc="item.desc" />
     </block>
   </view>
 </template>

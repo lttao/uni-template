@@ -1,21 +1,19 @@
 <template>
   <e-sticky :enable="sticky" :offsetTop="offsetTop" :h5NavHeight="h5NavHeight">
     <view class="e-tabs" :style="{ height: addUnit(height) }">
-      <view :style="mianStyle">
+      <view :style="[mianStyle]">
         <scroll-view scroll-x class="e-scroll-view" :scroll-left="scrollLeft" scroll-with-animation>
           <view class="e-scroll-box" :style="{ height: addUnit(height) }" :class="{ 'e-tabs-scorll-flex': !scroll }">
             <block v-for="(item, index) in list" :key="index">
-              <!-- <view @click="clickTab(index)" :style="tabItemStyle(index)" class="e-tab-item line-1"> -->
-              <view @click="clickTab(index)" :style="tabItemStyle" class="e-tab-item line-1">
+              <view @click="clickTab(index)" :style="[tabItemStyle(index)]" class="e-tab-item line-1">
                 {{ item | itemFormat(listKey) }}
               </view>
             </block>
 
             <!-- tab 样式 -->
-            <view :style="tabLineStyle" class="e-tab-line">
-              <slot name="tab-line">
-                <view :style="{ width: addUnit(lineWidth), height: addUnit(lineHeight), background: activeColor }"></view>
-              </slot>
+            <view :style="[tabLineStyle]" class="e-tab-line">
+              <view v-if="!$slots.tabLine" :style="[{ width: addUnit(lineWidth), height: addUnit(lineHeight), background: activeColor }]"></view>
+              <slot name="tabLine"></slot>
             </view>
           </view>
         </scroll-view>
@@ -159,26 +157,17 @@ export default {
       return style
     },
     tabItemStyle() {
-      // return (index) => {
-      //   const { itemStyle, number, addUnit, height, current, defaultColor, activeColor, duration } = this
-      //   const style = {
-      //     ...itemStyle,
-      //     height: addUnit(height),
-      //     lineHeight: addUnit(height),
-      //     color: current === index ? activeColor : defaultColor,
-      //     transition: `all ${number(duration) ? `${duration}s` : duration}`
-      //   }
-      //   return style
-      // }
-      const { itemStyle, number, addUnit, height, current, defaultColor, activeColor, duration } = this
-      const style = {
-        ...itemStyle,
-        height: addUnit(height),
-        lineHeight: addUnit(height),
-        // color: current === index ? activeColor : defaultColor,
-        transition: `all ${number(duration) ? `${duration}s` : duration}`
+      return (index) => {
+        const { itemStyle, number, addUnit, height, current, defaultColor, activeColor, duration } = this
+        const style = {
+          ...itemStyle,
+          height: addUnit(height),
+          lineHeight: addUnit(height),
+          transition: `all ${number(duration) ? `${duration}s` : duration}`,
+          color: current === index ? activeColor : defaultColor
+        }
+        return style
       }
-      return style
     },
     tabLineStyle() {
       const { number, current, itemsDomInfo, duration } = this

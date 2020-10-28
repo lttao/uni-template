@@ -4,7 +4,7 @@
   <view class="e-load-more">
     <!-- 加载中 -->
     <view v-show="status === 'loading'">
-      <view :style="loadingStyle" class="loading">
+      <view :style="[loadingStyle]" class="loading">
         <e-loading-icon :size="34"></e-loading-icon>
         <view class="loading-text">加载中...</view>
       </view>
@@ -12,12 +12,12 @@
 
     <!-- 暂无更多 -->
     <slot v-if="status === 'noMore'" name="noMore">
-      <view :style="heightStyle" class="loading">{{ noMoreText }}</view>
+      <view :style="[heightStyle]" class="loading">{{ noMoreText }}</view>
     </slot>
     <!-- 下拉加载更多数据 -->
     <view v-show="status === 'more'">
       <slot name="more">
-        <view :style="heightStyle" class="loading">加载更多</view>
+        <view :style="[heightStyle]" class="loading">加载更多</view>
       </slot>
     </view>
     <!-- 暂无数据 -->
@@ -49,10 +49,12 @@ export default {
       default: '没有更多了'
     },
     noDataSize: {
-      type: [String, Number]
+      type: [String, Number],
+      default: 160
     },
     noDataUrl: {
-      type: String
+      type: String,
+      default: 'dingdan'
     },
     noDataText: {
       type: String,
