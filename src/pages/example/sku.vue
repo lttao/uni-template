@@ -12,10 +12,6 @@
       <view>checked：{{ checked }}</view>
       <view>noCheckItem：{{ noCheckItem }}</view>
     </view>
-    <e-image :src="src" :width="100" :height="100" shape="circle"></e-image>
-    <view style="position: fixed; top: 44px; width: 100%;">
-      <e-tabs @change="current = $event" :list="['你说你说你说你说你说', { name: '哈哈', id: '1' }, { name: '嘿嘿', id: '2' }]" :item-width="200" :current="current"></e-tabs>
-    </view>
     <block v-for="(item, index) in skuNameList" :key="index">
       <view class="sku">
         <view class="sku-title">{{ item.skuName }}</view>
@@ -30,17 +26,9 @@
 </template>
 
 <script>
-import eImage from '@/components/e-image/e-image.vue'
-import eTabs from '@/components/e-tabs/e-tabs.vue'
 export default {
-  components: {
-    eImage,
-    eTabs
-  },
   data() {
     return {
-      current: 0,
-      src: '',
       skuList: [
         {
           skuId: '0',
@@ -59,7 +47,7 @@ export default {
         {
           skuId: '2',
           skuGroup: ['蓝色', '大'],
-          remainStock: 0,
+          remainStock: 5,
           price: 0.01,
           picUrl: 'https://dummyimage.com/100x100/0084ff/ffffff&text=大'
         },

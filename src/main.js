@@ -2,10 +2,10 @@ import Vue from 'vue'
 import App from './App'
 
 import mixin from '@/util/mixin/index.js'
-import icons from '@/component/icons/icons.vue'
+import eIcon from '@/components/e-icon/e-icon.vue'
 
 Vue.mixin(mixin)
-Vue.component('icons', icons)
+Vue.component('icons', eIcon)
 
 Vue.config.productionTip = false
 

@@ -13,6 +13,32 @@
 			}
 		},
 		{
+			"path": "pages/tab-bar/example",
+			"style": {
+				"navigationBarTitleText": "例子"
+			}
+		},
+		{
+			"path": "pages/tab-bar/user",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
+
+		
+		{
+			"path": "pages/components/button",
+			"style": {
+				"navigationBarTitleText": "Button"
+			}
+		},
+		{
+			"path": "pages/components/collapse",
+			"style": {
+				"navigationBarTitleText": "Collapse"
+			}
+		},
+		{
 			"path": "pages/components/icon",
 			"style": {
 				"navigationBarTitleText": "Icon"
@@ -28,12 +54,6 @@
 			"path": "pages/components/load-more",
 			"style": {
 				"navigationBarTitleText": "Load-more"
-			}
-		},
-		{
-			"path": "pages/components/button",
-			"style": {
-				"navigationBarTitleText": "Button"
 			}
 		},
 		{
@@ -75,7 +95,7 @@
 		{
 			"path": "pages/components/tabs",
 			"style": {
-				"navigationBarTitleText": "tabs"
+				"navigationBarTitleText": "Tabs"
 			}
 		},
 
@@ -85,58 +105,25 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "template"
+				"navigationBarTitleText": "Template"
 			}
 		},
-		{
-			"path": "pages/example/index",
-			"style": {
-				"navigationBarTitleText": "index"
-			}
-		},
-		{
-			"path": "pages/example/swiperaction",
-			"style": {
-				"navigationBarTitleText": "swiper action"
-			}
-		},
-		{
-			"path": "pages/example/collapse",
-			"style": {
-				"navigationBarTitleText": "collapse"
-			}
-		},
-		{
-			"path": "pages/example/cell",
-			"style": {
-				"navigationBarTitleText": "cell"
-			}
-		},
-		{
-			"path": "pages/example/field",
-			"style": {
-				"navigationBarTitleText": "field"
-			}
-		},
+
 		{
 			"path": "pages/example/sku",
 			"style": {
-				"navigationBarTitleText": "sku"
-			}
-		},
-		{
-			"path": "pages/example/api",
-			"style": {
-				"navigationBarTitleText": "api"
+				"navigationBarTitleText": "Sku"
 			}
 		}
 	],
 	"tabBar": {
+		"height": "55px",
+		"backgroundColor": "#f8f8f8",
         "color": "#7b7b7b",
         "selectedColor": "#129aee",
         "fontSize": "11px",
-        "iconWidth": "30px",
-        "spacing": "4px",
+        "iconWidth": "26px",
+        "spacing": "6px",
         "list": [
             {
                 "pagePath": "pages/tab-bar/components",
@@ -149,13 +136,27 @@
                 "iconPath": "static/images/tab-bar/2.png",
                 "selectedIconPath": "static/images/tab-bar/2-checked.png",
                 "text": "API"
+            },
+            {
+                "pagePath": "pages/tab-bar/example",
+                "iconPath": "static/images/tab-bar/3.png",
+                "selectedIconPath": "static/images/tab-bar/3-checked.png",
+                "text": "例子"
+            },
+            {
+                "pagePath": "pages/tab-bar/user",
+                "iconPath": "static/images/tab-bar/4.png",
+                "selectedIconPath": "static/images/tab-bar/4-checked.png",
+                "text": "我的"
             }
         ]
     },
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarTitleText": "Elegant-UI",
+		"navigationBarBackgroundColor": "#f8f8f8",
+		"backgroundColorTop": "#f8f8f8",
+		"backgroundColorBottom": "#f8f8f8",
+		"backgroundColor": "#f8f8f8"
 	}
 }

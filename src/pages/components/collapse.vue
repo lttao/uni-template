@@ -1,20 +1,20 @@
 <template>
   <view>
-    <collapse>
-      <collapse-item :title="item.head" v-for="(item, index) in itemList" :key="index">
+    <e-collapse>
+      <e-collapse-item :title="item.head" v-for="(item, index) in itemList" :key="index">
         {{ item.body }}
-      </collapse-item>
-    </collapse>
+      </e-collapse-item>
+    </e-collapse>
   </view>
 </template>
 
 <script>
-import collapse from '@/component/collapse/collapse.vue'
-import collapseItem from '@/component/collapse/collapseItem.vue'
+import eCollapse from '@/components/e-collapse/e-collapse.vue'
+import eCollapseItem from '@/components/e-collapse/e-collapse-item.vue'
 export default {
   components: {
-    collapse,
-    collapseItem
+    eCollapse,
+    eCollapseItem
   },
   data() {
     return {

@@ -5,7 +5,8 @@
         <scroll-view scroll-x class="e-scroll-view" :scroll-left="scrollLeft" scroll-with-animation>
           <view class="e-scroll-box" :style="{ height: addUnit(height) }" :class="{ 'e-tabs-scorll-flex': !scroll }">
             <block v-for="(item, index) in list" :key="index">
-              <view @click="clickTab(index)" :style="tabItemStyle(index)" class="e-tab-item line-1">
+              <!-- <view @click="clickTab(index)" :style="tabItemStyle(index)" class="e-tab-item line-1"> -->
+              <view @click="clickTab(index)" :style="tabItemStyle" class="e-tab-item line-1">
                 {{ item | itemFormat(listKey) }}
               </view>
             </block>
@@ -158,17 +159,26 @@ export default {
       return style
     },
     tabItemStyle() {
-      return (index) => {
-        const { itemStyle, number, addUnit, height, current, defaultColor, activeColor, duration } = this
-        const style = {
-          ...itemStyle,
-          height: addUnit(height),
-          lineHeight: addUnit(height),
-          color: current === index ? activeColor : defaultColor,
-          transition: `all ${number(duration) ? `${duration}s` : duration}`
-        }
-        return style
+      // return (index) => {
+      //   const { itemStyle, number, addUnit, height, current, defaultColor, activeColor, duration } = this
+      //   const style = {
+      //     ...itemStyle,
+      //     height: addUnit(height),
+      //     lineHeight: addUnit(height),
+      //     color: current === index ? activeColor : defaultColor,
+      //     transition: `all ${number(duration) ? `${duration}s` : duration}`
+      //   }
+      //   return style
+      // }
+      const { itemStyle, number, addUnit, height, current, defaultColor, activeColor, duration } = this
+      const style = {
+        ...itemStyle,
+        height: addUnit(height),
+        lineHeight: addUnit(height),
+        // color: current === index ? activeColor : defaultColor,
+        transition: `all ${number(duration) ? `${duration}s` : duration}`
       }
+      return style
     },
     tabLineStyle() {
       const { number, current, itemsDomInfo, duration } = this
