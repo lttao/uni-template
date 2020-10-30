@@ -87,6 +87,21 @@ export default {
     radius: {
       type: [Number, String],
       default: ''
+    },
+    // 圆形按钮
+    round: {
+      type: Boolean,
+      default: false
+    },
+    // 方形按钮
+    square: {
+      type: Boolean,
+      default: false
+    },
+    // 终极样式
+    buttonStyle: {
+      type: Object,
+      default: () => ({})
     }
   },
   computed: {
@@ -119,8 +134,8 @@ export default {
       }
     },
     style() {
-      const style = {}
-      const { type, plain, size, width, height, radius, addUnit } = this
+      const { buttonStyle, type, plain, size, width, height, radius, addUnit, round, square } = this
+      const style = buttonStyle || {}
       switch (type) {
         case 'primary':
           style.background = '#00B1F1'
@@ -162,7 +177,11 @@ export default {
           style.width = 'auto'
           style.minWidth = width ? addUnit(width) : '324rpx'
           style.height = height ? addUnit(height) : '80rpx'
-          style.borderRadius = radius || Number(radius || 0) === 0 ? addUnit(radius) : '12rpx'
+
+          if (round) style.borderRadius = height ? addUnit(height) : '80rpx'
+          else if (square) style.borderRadius = 0
+          else style.borderRadius = radius || Number(radius || 0) === 0 ? addUnit(radius) : '12rpx'
+
           style.display = 'inline-flex'
           style.fontSize = '16px'
           break
@@ -170,10 +189,18 @@ export default {
           style.width = 'auto'
           style.minWidth = width ? addUnit(width) : '136rpx'
           style.height = height ? addUnit(height) : '56rpx'
-          style.borderRadius = radius || Number(radius || 0) === 0 ? addUnit(radius) : '8rpx'
+
+          if (round) style.borderRadius = height ? addUnit(height) : '56rpx'
+          else if (square) style.borderRadius = 0
+          else style.borderRadius = radius || Number(radius || 0) === 0 ? addUnit(radius) : '12rpx'
+
           style.display = 'inline-flex'
           style.fontSize = '12px'
           break
+        default:
+          if (round) style.borderRadius = height ? addUnit(height) : '88rpx'
+          else if (square) style.borderRadius = 0
+          else style.borderRadius = radius || Number(radius || 0) === 0 ? addUnit(radius) : '12rpx'
       }
       return style
     }

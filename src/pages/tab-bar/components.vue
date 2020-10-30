@@ -46,6 +46,9 @@ export default {
       }
     }
   },
+  onLoad() {
+    console.log('onLoad')
+  },
   methods: {
     setNewTab() {
       uni.setTabBarItem({

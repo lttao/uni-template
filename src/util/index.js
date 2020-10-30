@@ -7,7 +7,7 @@ export * from './filters'
 // 网络请求
 export { default as http } from './http'
 // 本地储存
-export * from './storage'
+export { default as storageUtil } from './storage'
 // 工具
 export * from './tool'
 // 验证

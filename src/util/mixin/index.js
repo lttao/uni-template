@@ -1,3 +1,6 @@
+import { noLoginPage } from '@/config'
+import store from '@/store'
+
 export default {
   data() {
     return {}
@@ -25,15 +28,24 @@ export default {
     },
     // 跳转链接
     $toUrl(url, type) {
-      switch (type) {
-        case 'launch':
-          return uni.reLaunch({ url })
-        case 'redirect':
-          return uni.redirectTo({ url })
-        case 'tab':
-          return uni.switchTab({ url })
-        default:
-          return uni.navigateTo({ url })
+      const token = store.getters.token
+      const noLogin = noLoginPage.findIndex((item) => item === url) !== -1
+      if (!noLogin && !token) {
+        // 如果未登录就去登录
+        uni.navigateTo({
+          url: '/pages/login/index'
+        })
+      } else {
+        switch (type) {
+          case 'launch':
+            return uni.reLaunch({ url })
+          case 'redirect':
+            return uni.redirectTo({ url })
+          case 'tab':
+            return uni.switchTab({ url })
+          default:
+            return uni.navigateTo({ url })
+        }
       }
     },
     // 返回

@@ -51,23 +51,14 @@ export function setLocal(key, val, expire = 24) {
 class StorageUtil {
   getToken() {
     return getLocal('token')
-    // return getLocal('token') || 'oTVt1wmotVAPse8DKV8PXf7oJqCA'
   }
 
   setToken(token) {
     return setLocal('token', token)
   }
 
-  removeToken() {
+  clearToken() {
     return setLocal('token', null)
-  }
-
-  getPayOpenId() {
-    return getLocal('payOpenId')
-  }
-
-  setPayOpenId(payOpenId) {
-    return setLocal('payOpenId', payOpenId)
   }
 }
 
