@@ -3,8 +3,7 @@
     <e-cell icon="shezhi" title="Cell" :title-style="{ color: 'blue' }" label="此页面已展示" value="不可点击" desc="" :can-click="false" :arrow="false" />
 
     <block v-for="(item, index) in list" :key="index">
-      <e-cell @click="$toUrl(item.url)" :url="item.url" :title="item.title" :desc="item.desc" :titleStyle="item.titleStyle" :border="cellBorder(index)" />
-      <!-- <e-cell @click="$toUrl(item.url)" v-bind="item" :border="cellBorder(index)" /> -->
+      <e-cell @click="toUrl(item)" :url="item.url" :title="item.title" :desc="item.desc" :titleStyle="item.titleStyle" :border="cellBorder(index)" />
     </block>
   </view>
 </template>
@@ -29,8 +28,8 @@ export default {
         { url: '/pages/components/load-more', title: 'Load-more', desc: '加载更多' },
         { url: '/pages/components/loading-icon', title: 'Loading-icon', desc: '加载图标' },
         { url: '/pages/components/mask', title: 'Mask', desc: '蒙层' },
-        { url: '/pages/components/icon', title: 'Popup', desc: '弹出层', titleStyle: { color: 'red' } },
-        { url: '/pages/components/icon', title: 'Modal', desc: '确认框', titleStyle: { color: 'red' } },
+        { url: '/pages/components/popup', title: 'Popup', desc: '弹出层(待完善)' },
+        { url: '', title: 'Modal', desc: '确认框', titleStyle: { color: 'red' } },
         { url: '/pages/components/sticky', title: 'Sticky', desc: '吸顶' },
         { url: '/pages/components/swiper-action', title: 'Swiper-action', desc: '滑动操作' },
         { url: '/pages/components/switch', title: 'Switch', desc: '开关' },
@@ -50,6 +49,12 @@ export default {
     console.log('onLoad')
   },
   methods: {
+    toUrl(item) {
+      const { url } = item
+      if (!url) return this.$toast('还未开通，请等待')
+      this.$toUrl(url)
+    },
+
     setNewTab() {
       uni.setTabBarItem({
         index: 0,

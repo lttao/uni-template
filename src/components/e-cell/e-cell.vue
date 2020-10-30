@@ -10,8 +10,8 @@
           <slot name="left"></slot>
         </view>
         <view v-else>
-          <view :style="titleStyle" class="e-cell-title">{{ title }}</view>
-          <view v-if="label" :style="labelStyle" class="e-cell-label">{{ label }}</view>
+          <view :style="[titleStyle]" class="e-cell-title">{{ title }}</view>
+          <view v-if="label" :style="[labelStyle]" class="e-cell-label">{{ label }}</view>
         </view>
       </view>
 
@@ -21,12 +21,12 @@
           <slot name="right"></slot>
         </view>
         <view>
-          <text v-if="value" :style="valueStyle" class="e-cell-value">{{ value }}</text>
+          <text v-if="value" :style="[valueStyle]" class="e-cell-value">{{ value }}</text>
           <text v-else class="e-cell-desc">{{ desc || '' }}</text>
         </view>
 
         <!-- 箭头 -->
-        <e-icon v-if="arrow" name="right" size="36" color="#c9c9c9" :style="arrowStyle" class="arrow" />
+        <e-icon v-if="arrow" name="right" size="36" color="#c9c9c9" :style="[arrowStyle]" class="arrow" />
       </view>
     </view>
   </view>

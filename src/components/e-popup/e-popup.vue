@@ -1,38 +1,42 @@
 <!-- @format -->
 
 <template>
-  <view
-    v-if="visibleSync"
-    :style="[
-      customStyle,
-      {
-        zIndex: uZindex - 1
-      }
-    ]"
-    :class="{ 'drawer-visible': showDrawer }"
-    class="drawer"
-    hover-stop-propagation
-  >
-    <e-mask :custom-style="maskCustomStyle" :maskClickAble="maskCloseAble" :z-index="uZindex - 2" :show="showDrawer && mask" @click="maskClick" />
+  <view>
+    {{ visibleSync }}
+    {{ showDrawer }}
     <view
-      class="drawer-content"
-      @tap="modeCenterClose(mode)"
-      :class="[safeAreaInsetBottom ? 'safe-area-inset-bottom' : '', 'drawer-' + mode, showDrawer ? 'drawer-content-visible' : '', zoom && mode === 'center' ? 'animation-zoom' : '']"
-      @touchmove.stop.prevent
-      @tap.stop.prevent
-      :style="[style]"
+      v-if="visibleSync"
+      :style="[
+        customStyle,
+        {
+          zIndex: eZindex - 1
+        }
+      ]"
+      :class="{ 'drawer-visible': showDrawer }"
+      class="drawer"
+      hover-stop-propagation
     >
-      <view class="mode-center-box" @tap.stop.prevent @touchmove.stop.prevent v-if="mode === 'center'" :style="[centerStyle]">
-        <icon @click="close" v-if="closeable" class="close" :class="['close--' + closeIconPos]" :name="closeIcon" :color="closeIconColor" :size="closeIconSize"></icon>
-        <scroll-view class="drawer__scroll-view" scroll-y="true">
+      <e-mask :custom-style="maskCustomStyle" :maskClickAble="maskCloseAble" :z-index="eZindex - 2" :show="showDrawer && mask" @click="maskClick" />
+      <view
+        class="drawer-content"
+        @tap="modeCenterClose(mode)"
+        :class="[safeAreaInsetBottom ? 'safe-area-inset-bottom' : '', 'drawer-' + mode, showDrawer ? 'drawer-content-visible' : '', zoom && mode === 'center' ? 'animation-zoom' : '']"
+        @touchmove.stop.prevent
+        @tap.stop.prevent
+        :style="[style]"
+      >
+        <view class="mode-center-box" @tap.stop.prevent @touchmove.stop.prevent v-if="mode === 'center'" :style="[centerStyle]">
+          <icon @click="close" v-if="closeable" class="close" :class="['close--' + closeIconPos]" :name="closeIcon" :color="closeIconColor" :size="closeIconSize"></icon>
+          <scroll-view class="drawer__scroll-view" scroll-y="true">
+            <slot />
+          </scroll-view>
+        </view>
+        <scroll-view class="drawer__scroll-view" scroll-y="true" v-else>
           <slot />
         </scroll-view>
-      </view>
-      <scroll-view class="drawer__scroll-view" scroll-y="true" v-else>
-        <slot />
-      </scroll-view>
-      <view @tap="close" class="close" :class="['close--' + closeIconPos]">
-        <icon v-if="mode !== 'center' && closeable" :name="closeIcon" :color="closeIconColor" :size="closeIconSize"></icon>
+        <view @tap="close" class="close" :class="['close--' + closeIconPos]">
+          <icon v-if="mode !== 'center' && closeable" :name="closeIcon" :color="closeIconColor" :size="closeIconSize"></icon>
+        </view>
       </view>
     </view>
   </view>
@@ -192,7 +196,7 @@ export default {
           transform: `translate3D(0px,${this.mode === 'top' ? '-100%' : '100%'},0px)`
         }
       }
-      style.zIndex = this.uZindex
+      style.zIndex = this.eZindex
       // 如果用户设置了borderRadius值，添加弹窗的圆角
       if (this.borderRadius) {
         switch (this.mode) {
@@ -221,7 +225,7 @@ export default {
       style.width = this.width ? this.getUnitValue(this.width) : this.getUnitValue(this.length)
       // 中部弹出的模式，如果没有设置高度，就用auto值，由内容撑开高度
       style.height = this.height ? this.getUnitValue(this.height) : 'auto'
-      style.zIndex = this.uZindex
+      style.zIndex = this.eZindex
       style.marginTop = `-${addUnit(this.negativeTop)}`
       if (this.borderRadius) {
         style.borderRadius = `${this.borderRadius}rpx`
@@ -231,8 +235,8 @@ export default {
       return style
     },
     // 计算整理后的z-index值
-    uZindex() {
-      return this.zIndex ? this.zIndex : 9999999
+    eZindex() {
+      return this.zIndex ? this.zIndex : 99
     }
   },
   watch: {

@@ -81,6 +81,12 @@
 			}
 		},
 		{
+			"path": "pages/components/popup",
+			"style": {
+				"navigationBarTitleText": "Popup"
+			}
+		},
+		{
 			"path": "pages/components/sticky",
 			"style": {
 				"navigationBarTitleText": "Sticky"
