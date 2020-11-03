@@ -29,7 +29,7 @@ export default {
         { url: '/pages/components/loading-icon', title: 'Loading-icon', desc: '加载图标' },
         { url: '/pages/components/mask', title: 'Mask', desc: '蒙层' },
         { url: '/pages/components/popup', title: 'Popup', desc: '弹出层(待完善)' },
-        { url: '', title: 'Modal', desc: '确认框', titleStyle: { color: 'red' } },
+        { url: '/pages/components/modal', title: 'Modal', desc: '确认框' },
         { url: '/pages/components/sticky', title: 'Sticky', desc: '吸顶' },
         { url: '/pages/components/swiper-action', title: 'Swiper-action', desc: '滑动操作' },
         { url: '/pages/components/switch', title: 'Switch', desc: '开关' },

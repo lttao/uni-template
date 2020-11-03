@@ -15,6 +15,9 @@ $e-page-padding: 30rpx;
     display: flex;
     flex-direction: column;
 }
+.e-flex-shrink {
+    flex-shrink: 0;
+}
 
 .e-row-start {
     justify-content: flex-start;
@@ -88,4 +91,11 @@ $e-page-padding: 30rpx;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+.e-bold {
+    font-weight: bold;
+}
+.e-cell-hover {
+    background: $e-bg-color;
 }

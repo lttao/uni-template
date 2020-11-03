@@ -81,6 +81,12 @@
 			}
 		},
 		{
+			"path": "pages/components/modal",
+			"style": {
+				"navigationBarTitleText": "Modal"
+			}
+		},
+		{
 			"path": "pages/components/popup",
 			"style": {
 				"navigationBarTitleText": "Popup"

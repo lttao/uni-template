@@ -3,34 +3,33 @@
 <template>
   <view>
     <e-popup
-      :zoom="zoom"
-      mode="center"
+      position="center"
+      @input="onInput"
+      :value="value"
       :popup="false"
-      :z-index="uZIndex"
-      v-model="value"
-      :length="width"
+      :z-index="eZIndex"
       :mask-close-able="maskCloseAble"
       :border-radius="borderRadius"
       @close="popupClose"
       :negative-top="negativeTop"
     >
-      <view class="model">
-        <view v-if="showTitle" class="model__title line-1" :style="[titleStyle]">{{ title }}</view>
-        <view class="model__content">
+      <view class="e-modal" :style="{ width: addUnit(width) }">
+        <view v-if="showTitle" class="e-modal__title line-1" :style="[titleStyle]">{{ title }}</view>
+        <view class="e-modal__content">
           <view :style="[contentStyle]" v-if="$slots.default">
             <slot />
           </view>
-          <view v-else class="model__content__message" :style="[contentStyle]">{{ content }}</view>
+          <view v-else class="e-modal__content__message" :style="[contentStyle]">{{ content }}</view>
         </view>
-        <view class="model__footer border-top" v-if="showCancelButton || showConfirmButton">
-          <view v-if="showCancelButton" :hover-stay-time="100" hover-class="model__btn--hover" class="model__footer__button border-right" :style="[cancelBtnStyle]" @tap="cancel">
+        <view class="e-modal__footer border-top" v-if="showCancelButton || showConfirmButton">
+          <view v-if="showCancelButton" :hover-stay-time="100" hover-class="e-modal__btn--hover" class="e-modal__footer__button border-right" :style="[cancelBtnStyle]" @tap="cancel">
             {{ cancelText }}
           </view>
           <view
             v-if="showConfirmButton || $slots['confirm-button']"
             :hover-stay-time="100"
-            :hover-class="asyncClose ? 'none' : 'model__btn--hover'"
-            class="model__footer__button hairline-left"
+            :hover-class="asyncClose ? 'none' : 'e-modal__btn--hover'"
+            class="e-modal__footer__button hairline-left"
             :style="[confirmBtnStyle]"
             @tap="confirm"
           >
@@ -51,8 +50,10 @@
 <script>
 import ePopup from '../e-popup/e-popup.vue'
 import eLoadingIcon from '../e-loading-icon/e-loading-icon.vue'
+import eMixin from '../e-mixin'
 export default {
   name: 'modal',
+  mixins: [eMixin],
   components: {
     ePopup,
     eLoadingIcon
@@ -198,7 +199,7 @@ export default {
         this.confirmStyle
       )
     },
-    uZIndex() {
+    eZIndex() {
       return this.zIndex ? this.zIndex : 999999
     }
   },
@@ -228,6 +229,9 @@ export default {
         this.loading = false
       }, 300)
     },
+    onInput(e) {
+      this.$emit('input', e)
+    },
     // 点击遮罩关闭modal，设置v-model的值为false，否则无法第二次弹起modal
     popupClose() {
       this.$emit('input', false)
@@ -241,7 +245,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.model {
+.e-modal {
   height: auto;
   overflow: hidden;
   font-size: 32rpx;

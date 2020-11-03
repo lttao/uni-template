@@ -1,430 +1,295 @@
-<!-- @format -->
-
 <template>
-  <view>
-    {{ visibleSync }}
-    {{ showDrawer }}
-    <view
-      v-if="visibleSync"
-      :style="[
-        customStyle,
-        {
-          zIndex: eZindex - 1
-        }
-      ]"
-      :class="{ 'drawer-visible': showDrawer }"
-      class="drawer"
-      hover-stop-propagation
-    >
-      <e-mask :custom-style="maskCustomStyle" :maskClickAble="maskCloseAble" :z-index="eZindex - 2" :show="showDrawer && mask" @click="maskClick" />
-      <view
-        class="drawer-content"
-        @tap="modeCenterClose(mode)"
-        :class="[safeAreaInsetBottom ? 'safe-area-inset-bottom' : '', 'drawer-' + mode, showDrawer ? 'drawer-content-visible' : '', zoom && mode === 'center' ? 'animation-zoom' : '']"
-        @touchmove.stop.prevent
-        @tap.stop.prevent
-        :style="[style]"
-      >
-        <view class="mode-center-box" @tap.stop.prevent @touchmove.stop.prevent v-if="mode === 'center'" :style="[centerStyle]">
-          <icon @click="close" v-if="closeable" class="close" :class="['close--' + closeIconPos]" :name="closeIcon" :color="closeIconColor" :size="closeIconSize"></icon>
-          <scroll-view class="drawer__scroll-view" scroll-y="true">
-            <slot />
-          </scroll-view>
+  <view class="e-popup-wrapper" @touchmove.stop.prevent>
+    <!-- #ifdef APP-NVUE -->
+    <!-- <e-overlay :show="overlay && value" :custom-style="overlayStyle" @click="onOverlayClick" /> -->
+    <!-- nvue 平台降级处理，遮罩无动画 -->
+    <view v-if="overlay && value" class="e-overlay" :style="[overlayStyle]" @click="onOverlayClick" />
+    <!-- #endif -->
+    <!-- #ifndef APP-NVUE -->
+    <e-mask :show="overlay && value" :custom-style="overlayStyle" @click="onOverlayClick" />
+    <!-- #endif -->
+    <template v-if="display">
+      <template v-if="position === 'center'">
+        <view v-if="inited" ref="ani" class="e-popup" :class="[customClass, 'e-popup--' + position, classes]" :style="[mergeStyle]" @click="onOverlayClick">
+          <view class="e-popup__content" :style="[customStyle]" @click.stop><slot /></view>
         </view>
-        <scroll-view class="drawer__scroll-view" scroll-y="true" v-else>
+      </template>
+      <template v-else>
+        <view v-if="inited" ref="ani" class="e-popup" :class="[customClass, 'e-popup--' + position, classes]" :style="[mergeStyle]">
           <slot />
-        </scroll-view>
-        <view @tap="close" class="close" :class="['close--' + closeIconPos]">
-          <icon v-if="mode !== 'center' && closeable" :name="closeIcon" :color="closeIconColor" :size="closeIconSize"></icon>
         </view>
-      </view>
-    </view>
+      </template>
+    </template>
   </view>
 </template>
 
 <script>
+import eComponent from '../e-mixin/component'
 import eMask from '../e-mask/e-mask.vue'
-function number(value) {
-  return /^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(value)
-}
-function addUnit(value = 'auto', unit = 'rpx') {
-  value = String(value)
-  // 用uView内置验证规则中的number判断是否为数值
-  return number(value) ? `${value}${unit}` : value
-}
+import transition from '../e-mixin/transition'
+
 export default {
   name: 'e-popup',
   components: {
     eMask
   },
+  mixins: [eComponent, transition],
+  // model: {
+  //     prop: 'show',
+  //     event: 'input'
+  // },
   props: {
-    // 显示状态
-    show: {
-      type: Boolean,
-      default: false
-    },
-    // 弹出方向，left|right|top|bottom|center
-    mode: {
-      type: String,
-      default: 'left'
-    },
-    // 是否显示遮罩
-    mask: {
-      type: Boolean,
-      default: true
-    },
-    // 抽屉的宽度(mode=left|right)，或者高度(mode=top|bottom)，单位rpx，或者"auto"
-    // 或者百分比"50%"，表示由内容撑开高度或者宽度
-    length: {
-      type: [Number, String],
-      default: 'auto'
-    },
-    // 是否开启缩放动画，只在mode=center时有效
-    zoom: {
-      type: Boolean,
-      default: true
-    },
-    // 是否开启底部安全区适配，开启的话，会在iPhoneX机型底部添加一定的内边距
-    safeAreaInsetBottom: {
-      type: Boolean,
-      default: false
-    },
-    // 是否可以通过点击遮罩进行关闭
-    maskCloseAble: {
-      type: Boolean,
-      default: true
-    },
-    // 用户自定义样式
-    customStyle: {
-      type: Object,
-      default() {
-        return {}
-      }
-    },
     value: {
       type: Boolean,
-      default: false
+      default: false // 小程序端使用 model 定制 prop 和 event无效，只好在 popup 中使用 value 代替 show
     },
-    // 此为内部参数，不在文档对外使用，为了解决Picker和keyboard等融合了弹窗的组件
-    // 对v-model双向绑定多层调用造成报错不能修改props值的问题
-    popup: {
+    overlay: {
       type: Boolean,
       default: true
     },
-    // 显示显示弹窗的圆角，单位rpx
-    borderRadius: {
-      type: [Number, String],
-      default: 0
-    },
-    zIndex: {
-      type: [Number, String],
-      default: ''
-    },
-    // 是否显示关闭图标
-    closeable: {
-      type: Boolean,
-      default: false
-    },
-    // 关闭图标的名称，只能uView的内置图标
-    closeIcon: {
+    position: {
       type: String,
-      default: 'close'
+      default: 'bottom' // top, bottom, left, right, center
     },
-    // 自定义关闭图标位置，top-left为左上角，top-right为右上角，bottom-left为左下角，bottom-right为右下角
-    closeIconPos: {
-      type: String,
-      default: 'top-right'
+    duration: {
+      type: null,
+      default: 300
     },
-    // 关闭图标的颜色
-    closeIconColor: {
-      type: String,
-      default: '#909399'
-    },
-    // 关闭图标的大小，单位rpx
-    closeIconSize: {
-      type: [String, Number],
-      default: '30'
-    },
-    // 宽度，只对左，右，中部弹出时起作用，单位rpx，或者"auto"
-    // 或者百分比"50%"，表示由内容撑开高度或者宽度，优先级高于length参数
-    width: {
-      type: String,
-      default: ''
-    },
-    // 高度，只对上，下，中部弹出时起作用，单位rpx，或者"auto"
-    // 或者百分比"50%"，表示由内容撑开高度或者宽度，优先级高于length参数
-    height: {
-      type: String,
-      default: ''
-    },
-    // 给一个负的margin-top，往上偏移，避免和键盘重合的情况，仅在mode=center时有效
-    negativeTop: {
-      type: [String, Number],
-      default: 0
-    },
-    // 遮罩的样式，一般用于修改遮罩的透明度
-    maskCustomStyle: {
+    overlayStyle: {
       type: Object,
-      default() {
-        return {}
-      }
+      default: () => ({})
+    },
+    closeOnClickOverlay: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
     return {
-      visibleSync: false,
-      showDrawer: false,
-      timer: null,
-      closeFromInner: false // value的值改变，是发生在内部还是外部
-    }
-  },
-  computed: {
-    // 根据mode的位置，设定其弹窗的宽度(mode = left|right)，或者高度(mode = top|bottom)
-    style() {
-      let style = {}
-      // 如果是左边或者上边弹出时，需要给translate设置为负值，用于隐藏
-      if (this.mode === 'left' || this.mode === 'right') {
-        style = {
-          width: this.width ? this.getUnitValue(this.width) : this.getUnitValue(this.length),
-          height: '100%',
-          transform: `translate3D(${this.mode === 'left' ? '-100%' : '100%'},0px,0px)`
-        }
-      } else if (this.mode === 'top' || this.mode === 'bottom') {
-        style = {
-          width: '100%',
-          height: this.height ? this.getUnitValue(this.height) : this.getUnitValue(this.length),
-          transform: `translate3D(0px,${this.mode === 'top' ? '-100%' : '100%'},0px)`
-        }
-      }
-      style.zIndex = this.eZindex
-      // 如果用户设置了borderRadius值，添加弹窗的圆角
-      if (this.borderRadius) {
-        switch (this.mode) {
-          case 'left':
-            style.borderRadius = `0 ${this.borderRadius}rpx ${this.borderRadius}rpx 0`
-            break
-          case 'top':
-            style.borderRadius = `0 0 ${this.borderRadius}rpx ${this.borderRadius}rpx`
-            break
-          case 'right':
-            style.borderRadius = `${this.borderRadius}rpx 0 0 ${this.borderRadius}rpx`
-            break
-          case 'bottom':
-            style.borderRadius = `${this.borderRadius}rpx ${this.borderRadius}rpx 0 0`
-            break
-          default:
-        }
-        // 不加可能圆角无效
-        style.overflow = 'hidden'
-      }
-      return style
-    },
-    // 中部弹窗的特有样式
-    centerStyle() {
-      const style = {}
-      style.width = this.width ? this.getUnitValue(this.width) : this.getUnitValue(this.length)
-      // 中部弹出的模式，如果没有设置高度，就用auto值，由内容撑开高度
-      style.height = this.height ? this.getUnitValue(this.height) : 'auto'
-      style.zIndex = this.eZindex
-      style.marginTop = `-${addUnit(this.negativeTop)}`
-      if (this.borderRadius) {
-        style.borderRadius = `${this.borderRadius}rpx`
-        // 不加可能圆角无效
-        style.overflow = 'hidden'
-      }
-      return style
-    },
-    // 计算整理后的z-index值
-    eZindex() {
-      return this.zIndex ? this.zIndex : 99
+      name: 'center',
+      overlayShow: false
     }
   },
   watch: {
-    value(val) {
-      if (val) {
-        this.open()
-      } else if (!this.closeFromInner) {
-        this.close()
-      }
-      this.closeFromInner = false
+    value: {
+      handler(value, old) {
+        if (value === old) {
+          return
+        }
+
+        // #ifndef APP-NVUE
+        value ? this.enter() : this.leave()
+        // #endif
+        // #ifdef APP-NVUE
+        value ? this.enter2() : this.leave2()
+        // #endif
+      },
+      immediate: true
     }
   },
-  mounted() {
-    // 组件渲染完成时，检查value是否为true，如果是，弹出popup
-    this.value && this.open()
+  created() {
+    this.setAniName()
   },
   methods: {
-    // 判断传入的值，是否带有单位，如果没有，就默认用rpx单位
-    getUnitValue(val) {
-      if (/(%|px|rpx|auto)$/.test(val)) return val
-      else return val + 'rpx'
-    },
-    // 遮罩被点击
-    maskClick() {
-      this.close()
-    },
-    close() {
-      // 标记关闭是内部发生的，否则修改了value值，导致watch中对value检测，导致再执行一遍close
-      // 造成@close事件触发两次
-      this.closeFromInner = true
-      this.change('showDrawer', 'visibleSync', false)
-    },
-    // 中部弹出时，需要.drawer-content将居中内容，此元素会铺满屏幕，点击需要关闭弹窗
-    // 让其只在mode=center时起作用
-    modeCenterClose(mode) {
-      if (mode !== 'center' || !this.maskCloseAble) return
-      this.close()
-    },
-    open() {
-      this.change('visibleSync', 'showDrawer', true)
-    },
-    // 此处的原理是，关闭时先通过动画隐藏弹窗和遮罩，再移除整个组件
-    // 打开时，先渲染组件，延时一定时间再让遮罩和弹窗的动画起作用
-    change(param1, param2, status) {
-      // 如果this.popup为false，意味着为picker，actionsheet等组件调用了popup组件
-      if (this.popup === true) {
-        this.$emit('input', status)
+    onOverlayClick() {
+      this.$emit('click-overlay')
+      if (this.closeOnClickOverlay) {
+        this.$emit('close', false)
+        this.$emit('input', false)
       }
-      this[param1] = status
-      if (status) {
-        // #ifdef H5 || MP
-        this.timer = setTimeout(() => {
-          this[param2] = status
-          this.$emit(status ? 'open' : 'close')
-        }, 50)
+    },
+    setAniName() {
+      const { position } = this
+      // #ifdef APP-NVUE
+      const aniMap = {
+        center: 'fade',
+        top: 'slide-down',
+        bottom: 'slide-up',
+        left: 'slide-left',
+        right: 'slide-right'
+      }
+      this.name = aniMap[position]
+      // #endif
+      // #ifndef APP-NVUE
+      this.name = position
+      // #endif
+    },
+    // 完成过渡后触发
+    onTransitionEnd() {
+      if (this.transitionEnded) {
+        return
+      }
+      this.transitionEnded = true
+      this.$emit(`after-${this.status}`)
+      const { value, display } = this
+      if (!value && display) {
+        this.display = false
+        // #ifdef APP-NVUE
+        this.inited = false
         // #endif
-        // #ifndef H5 || MP
-        this.$nextTick(() => {
-          this[param2] = status
-          this.$emit(status ? 'open' : 'close')
-        })
-        // #endif
-      } else {
-        this.timer = setTimeout(() => {
-          this[param2] = status
-          this.$emit(status ? 'open' : 'close')
-        }, 300)
       }
     }
   }
 }
 </script>
 
-<style scoped lang="scss">
-.drawer {
-  /* #ifndef APP-NVUE */
-  display: block;
-  /* #endif */
+<style lang="scss">
+// @import '../styles/index.scss';
+
+.e-popup {
+  // display: flex;
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow: hidden;
+  transition-timing-function: ease;
+  /* #ifndef APP-NVUE */
+  z-index: 99;
+  /* #endif */
+  &__content {
+    background-color: #fff;
+  }
+
+  &--center {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 750rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &--top {
+    background-color: #fff;
+    top: 0;
+    left: 0;
+    width: 750rpx;
+  }
+
+  &--bottom {
+    background-color: #fff;
+    bottom: 0;
+    left: 0;
+    width: 750rpx;
+  }
+
+  &--left {
+    background-color: #fff;
+    top: 0;
+    left: 0;
+    /* #ifndef APP-NVUE */
+    height: 100%;
+    /* #endif */
+    /* #ifdef APP-NVUE */
+    bottom: 0;
+    /* #endif */
+  }
+
+  &--right {
+    background-color: #fff;
+    top: 0;
+    right: 0;
+    /* #ifndef APP-NVUE */
+    height: 100%;
+    /* #endif */
+    /* #ifdef APP-NVUE */
+    bottom: 0;
+    /* #endif */
+  }
 }
 
-.drawer-content {
-  /* #ifndef APP-NVUE */
-  display: block;
-  /* #endif */
-  position: absolute;
-  z-index: 1003;
+/* #ifndef APP-NVUE */
+
+.e-center-enter-active,
+.e-center-leave-active {
+  transition-property: opacity;
+  transform: scale(1);
+  transition: transform 0.3s;
+}
+
+.e-center-enter,
+.e-center-leave-to {
+  opacity: 0;
+  transform: scale(0.6);
   transition: all 0.3s;
 }
 
-.drawer__scroll-view {
+.e-bottom-enter-active,
+.e-bottom-leave-active,
+.e-left-enter-active,
+.e-left-leave-active,
+.e-right-enter-active,
+.e-right-leave-active,
+.e-top-enter-active,
+.e-top-leave-active {
+  transition-property: transform;
+}
+
+.e-top-enter,
+.e-top-leave-to {
+  transform: translate3d(0, -100%, 0);
+}
+
+.e-bottom-enter,
+.e-bottom-leave-to {
+  transform: translate3d(0, 100%, 0);
+}
+
+.e-left-enter,
+.e-left-leave-to {
+  transform: translate3d(-100%, 0, 0);
+}
+
+.e-right-enter,
+.e-right-leave-to {
+  transform: translate3d(100%, 0, 0);
+}
+
+/* #endif */
+
+.e-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* #ifndef APP-NVUE */
   width: 100%;
   height: 100%;
-}
-
-.drawer-left {
-  top: 0;
-  bottom: 0;
-  left: 0;
-  background-color: #ffffff;
-}
-
-.drawer-right {
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-color: #ffffff;
-}
-
-.drawer-top {
-  top: 0;
-  left: 0;
-  right: 0;
-  background-color: #ffffff;
-}
-
-.drawer-bottom {
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: #ffffff;
-}
-
-.drawer-center {
-  /* #ifndef APP-NVUE */
-  display: flex;
-  flex-direction: column;
+  z-index: 99;
   /* #endif */
+  /* #ifdef APP-NVUE */
+  width: 750rpx;
   bottom: 0;
-  left: 0;
   right: 0;
-  top: 0;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  z-index: 99999;
-}
-
-.mode-center-box {
-  min-width: 100rpx;
-  min-height: 100rpx;
-  /* #ifndef APP-NVUE */
-  display: block;
+  // height: 724px;
   /* #endif */
-  position: relative;
-  background-color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.drawer-content-visible.drawer-center {
-  transform: scale(1);
-  opacity: 1;
+@keyframes e-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
-.animation-zoom {
-  transform: scale(1.15);
+@keyframes e-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
 
-.drawer-content-visible {
-  transform: translate3D(0px, 0px, 0px) !important;
-}
+@keyframes e-rotate {
+  from {
+    transform: rotate(0deg);
+  }
 
-.close {
-  position: absolute;
-  z-index: 3;
-}
-
-.close--top-left {
-  top: 30rpx;
-  left: 30rpx;
-}
-
-.close--top-right {
-  top: 30rpx;
-  right: 30rpx;
-}
-
-.close--bottom-left {
-  bottom: 30rpx;
-  left: 30rpx;
-}
-
-.close--bottom-right {
-  right: 30rpx;
-  bottom: 30rpx;
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>
