@@ -4,7 +4,7 @@
       <e-image src="/static/images/logo.png" :width="160" :height="160" class="logo" />
       <text @click="loginIn" class="text font">{{ hasLogin ? 'Elegant-UI' : '请登录' }}</text>
     </view>
-    <eCell @click="loginOut" title="退出登录" :border="false" />
+    <eCell v-if="hasLogin" @click="loginOut" title="退出登录" :border="false" />
   </view>
 </template>
 
