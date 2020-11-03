@@ -2,7 +2,10 @@
 
 <template>
   <button @click="onClick" :hover-class="hoverClass" :open-type="openType" :style="[style]" :class="{ disabled: disabled, plain }" class="e-button">
-    <e-loading-icon v-if="loading" :type="loadingType" :size="loadingIconSize" />
+    <view v-if="loading" class="e-flex row-center col-center">
+      <e-loading-icon :type="loadingType" :size="loadingIconSize" />
+      <text class="loading-text">{{ loadingText }}</text>
+    </view>
     <slot v-else></slot>
     <view v-if="loading && mask" @touchmove.stop.prevent :style="{ zIndex: zIndex }" class="mask no-move"></view>
   </button>
@@ -28,6 +31,10 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    loadingText: {
+      type: String,
+      default: ''
     },
     loadingSize: {
       type: [String, Number],
@@ -130,7 +137,7 @@ export default {
         case 'mini':
           return 30
         default:
-          return 44
+          return 40
       }
     },
     style() {
@@ -215,6 +222,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/common/scss/elegant-ui.scss';
 .e-button {
   width: 100%;
   height: 88rpx;
@@ -234,6 +242,9 @@ export default {
     width: 0;
     height: 0;
     border: none;
+  }
+  .loading-text {
+    margin-left: 10rpx;
   }
 }
 .plain-primary-hover {
