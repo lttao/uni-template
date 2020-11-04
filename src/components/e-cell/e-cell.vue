@@ -100,23 +100,17 @@ export default {
     // 控制标题的样式
     titleStyle: {
       type: Object,
-      default() {
-        return {}
-      }
+      default: () => ({})
     },
     // 右侧显示内容的样式
     valueStyle: {
       type: Object,
-      default() {
-        return {}
-      }
+      default: () => ({})
     },
     // 描述信息的样式
     labelStyle: {
       type: Object,
-      default() {
-        return {}
-      }
+      default: () => ({})
     },
     // 整体高度
     height: {

@@ -102,7 +102,7 @@ export default {
       // #endif
 
       this.disconnectObserver('contentObserver')
-      this.$getRect('.' + this.elClass).then((res) => {
+      this.getDomInfo('.' + this.elClass).then((res) => {
         this.height = res.height
         this.left = res.left
         this.width = res.width

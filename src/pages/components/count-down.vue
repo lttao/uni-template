@@ -14,7 +14,7 @@ export default {
   computed: {
     timestamp() {
       console.log(moment().valueOf())
-      return 1604465651 - moment().valueOf() / 1000
+      return moment().valueOf() / 1000 + 1000 - moment().valueOf() / 1000
     }
   }
 }

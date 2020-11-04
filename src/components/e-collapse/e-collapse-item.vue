@@ -28,8 +28,10 @@
 </template>
 
 <script>
+import mixin from '../e-mixin'
 export default {
   name: 'e-collapse-item',
+  mixins: [mixin],
   props: {
     // 标题
     title: {
@@ -142,7 +144,7 @@ export default {
     },
     // 查询内容高度
     queryRect() {
-      this.$getRect('#' + this.contentId).then((res) => {
+      this.getDomInfo('#' + this.contentId).then((res) => {
         this.height = res.height
       })
     }

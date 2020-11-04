@@ -31,7 +31,6 @@ export default {
     },
     loginOut() {
       this.clearToken()
-      this.$toUrl('/pages/login/index')
     }
   }
 }
@@ -41,6 +40,16 @@ export default {
 .page {
   height: 100%;
   background: #fff;
+}
+@media (prefers-color-scheme: dark) {
+  .page {
+    background: #1f1f1f;
+  }
+}
+@media (prefers-color-scheme: light) {
+  .page {
+    background: #fff;
+  }
 }
 .main {
   height: 80%;

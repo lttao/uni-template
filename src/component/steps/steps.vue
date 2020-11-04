@@ -23,7 +23,7 @@
           >
             {{ index + 1 }}
           </text>
-          <u-icon v-else size="22" color="#ffffff" :name="icon"></u-icon>
+          <!-- <u-icon v-else size="22" color="#ffffff" :name="icon"></u-icon> -->
         </view>
         <view
           class="u-steps__item__dot"

@@ -51,6 +51,12 @@
 			}
 		},
 		{
+			"path": "pages/components/dropdown",
+			"style": {
+				"navigationBarTitleText": "Dropdown"
+			}
+		},
+		{
 			"path": "pages/components/icon",
 			"style": {
 				"navigationBarTitleText": "Icon"

@@ -29,10 +29,12 @@
 
 <script>
 // 区分是否是自己
-let ARRAY = []
+import mixin from '../e-mixin'
 
+let ARRAY = []
 export default {
   name: 'e-swipe-action',
+  mixins: [mixin],
   props: {
     // index值，用于得知点击删除的是哪个按钮
     index: {
@@ -96,7 +98,6 @@ export default {
       scrollX: 0, // movable-view移动过程中产生的change事件中的x轴移动值
       status: false, // 滑动的状态，表示当前是展开还是关闭按钮的状态
       movableAreaWidth: 0, // 滑动区域
-      // elId: this.$u.guid(), // id，用于通知另外组件关闭时的识别
       showBtn: false // 刚开始渲染视图时不显示右边的按钮，避免视图闪动
     }
   },
@@ -193,7 +194,7 @@ export default {
     // 开始触摸
     touchstart() {},
     getActionRect() {
-      this.$getRect('.e-swipe-action').then((res) => {
+      this.getDomInfo('.e-swipe-action').then((res) => {
         this.movableAreaWidth = res.width
         // 等视图更新完后，再显示右边的可滑动按钮，防止这些按钮会"闪一下"
         this.$nextTick(() => {
