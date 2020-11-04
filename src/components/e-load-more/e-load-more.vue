@@ -17,7 +17,7 @@
     <!-- 下拉加载更多数据 -->
     <view v-show="status === 'more'">
       <slot name="more">
-        <view :style="[heightStyle]" class="loading">加载更多</view>
+        <view :style="[heightStyle]" class="loading">上拉加载更多</view>
       </slot>
     </view>
     <!-- 暂无数据 -->

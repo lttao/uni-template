@@ -45,6 +45,12 @@
 			}
 		},
 		{
+			"path": "pages/components/count-down",
+			"style": {
+				"navigationBarTitleText": "Count-down"
+			}
+		},
+		{
 			"path": "pages/components/icon",
 			"style": {
 				"navigationBarTitleText": "Icon"

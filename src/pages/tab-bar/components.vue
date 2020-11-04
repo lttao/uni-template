@@ -22,6 +22,7 @@ export default {
       list: [
         { url: '/pages/components/button', title: 'Button', desc: '按钮' },
         { url: '/pages/components/collapse', title: 'Collapse', desc: '折叠面板' },
+        { url: '/pages/components/count-down', title: 'Count-down', desc: '倒计时' },
         { url: '/pages/components/icon', title: 'Icon', desc: '图标' },
         { url: '/pages/components/image', title: 'Image', desc: '图片' },
         { url: '/pages/components/input', title: 'Input', desc: '输入框' },
