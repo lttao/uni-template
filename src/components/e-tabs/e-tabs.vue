@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import mixin from '../e-mixin/index.js'
+import mixin from '../e-mixin'
 import eSticky from '../e-sticky/e-sticky.vue'
 export default {
   name: 'e-tabs',

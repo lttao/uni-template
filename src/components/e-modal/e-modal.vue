@@ -50,10 +50,10 @@
 <script>
 import ePopup from '../e-popup/e-popup.vue'
 import eLoadingIcon from '../e-loading-icon/e-loading-icon.vue'
-import eMixin from '../e-mixin'
+import mixin from '../e-mixin'
 export default {
   name: 'modal',
-  mixins: [eMixin],
+  mixins: [mixin],
   components: {
     ePopup,
     eLoadingIcon

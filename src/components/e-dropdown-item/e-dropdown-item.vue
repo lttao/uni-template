@@ -118,7 +118,7 @@ export default {
       return false
     },
     // cell被点击
-    cellClick(value, label) {
+    cellClick(value) {
       // 修改通过v-model绑定的值
       this.$emit('input', value)
       // 通知父组件(e-dropdown)收起菜单
@@ -134,7 +134,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '@/common/scss/elegant-ui.scss';
+@import '../e-styles/index.scss';
 .e-dropdown-item {
   &_cell {
     height: 90rpx;

@@ -20,6 +20,7 @@ export default {
       tabBackTop: false,
       backTopDistance: 100,
       list: [
+        { url: '/pages/components/action-sheet', title: 'Action-sheet', desc: '按钮' },
         { url: '/pages/components/button', title: 'Button', desc: '按钮' },
         { url: '/pages/components/collapse', title: 'Collapse', desc: '折叠面板' },
         { url: '/pages/components/count-down', title: 'Count-down', desc: '倒计时' },

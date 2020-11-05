@@ -44,6 +44,7 @@ export default {
 @media (prefers-color-scheme: dark) {
   .page {
     background: #1f1f1f;
+    color: #fff;
   }
 }
 @media (prefers-color-scheme: light) {

@@ -1,0 +1,9 @@
+.e-line-1 {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.e-cell-hover {
+    background: $e-bg-color;
+}

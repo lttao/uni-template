@@ -13,7 +13,7 @@
 
 <script>
 import eLoadingIcon from '../e-loading-icon/e-loading-icon'
-import mixin from '../e-mixin/index.js'
+import mixin from '../e-mixin'
 
 export default {
   name: 'e-button',
@@ -222,7 +222,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/common/scss/elegant-ui.scss';
+@import '../e-styles/index.scss';
 .e-button {
   width: 100%;
   height: 88rpx;

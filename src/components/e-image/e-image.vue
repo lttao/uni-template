@@ -42,7 +42,7 @@
 <script>
 import eIcon from '../e-icon/e-icon.vue'
 import eLoadingIcon from '../e-loading-icon/e-loading-icon.vue'
-import mixin from '../e-mixin/index.js'
+import mixin from '../e-mixin'
 export default {
   name: 'e-image',
   components: {
@@ -223,7 +223,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '@/common/scss/elegant-ui.scss';
+@import '../e-styles/index.scss';
 .e-image {
   position: relative;
   transition: opacity 0.5s ease-in-out;

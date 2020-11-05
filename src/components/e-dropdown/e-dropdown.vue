@@ -231,7 +231,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '@/common/scss/elegant-ui.scss';
+@import '../e-styles/index.scss';
 .e-dropdown {
   flex: 1;
   width: 100%;

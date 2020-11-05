@@ -141,9 +141,6 @@ export default {
   /* #ifndef APP-NVUE */
   z-index: 99;
   /* #endif */
-  &__content {
-    background-color: #fff;
-  }
 
   &--center {
     top: 0;
@@ -156,21 +153,18 @@ export default {
   }
 
   &--top {
-    background-color: #fff;
     top: 0;
     left: 0;
     width: 750rpx;
   }
 
   &--bottom {
-    background-color: #fff;
     bottom: 0;
     left: 0;
     width: 750rpx;
   }
 
   &--left {
-    background-color: #fff;
     top: 0;
     left: 0;
     /* #ifndef APP-NVUE */
@@ -182,7 +176,6 @@ export default {
   }
 
   &--right {
-    background-color: #fff;
     top: 0;
     right: 0;
     /* #ifndef APP-NVUE */

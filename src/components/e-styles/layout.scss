@@ -1,12 +1,3 @@
-// 全局颜色
-$e-default: #333;
-$e-primary: blue;
-$e-success: green;
-$e-fail: red;
-$e-bg-color: #f2f2f2;
-$e-page-margin: 30rpx;
-$e-page-padding: 30rpx;
-
 // 公用样式
 .e-flex {
     display: flex;
@@ -87,15 +78,6 @@ $e-page-padding: 30rpx;
     padding-left: $e-page-padding;
 }
 
-.e-line-1 {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
 .e-bold {
     font-weight: bold;
-}
-.e-cell-hover {
-    background: $e-bg-color;
 }

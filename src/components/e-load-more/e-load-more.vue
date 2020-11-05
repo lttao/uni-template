@@ -22,22 +22,22 @@
     </view>
     <!-- 暂无数据 -->
     <slot v-if="status === 'noData'" name="noData">
-      <e-no-data :no-data-url="noDataUrl" :no-data-size="noDataSize" :no-data-height="noDataHeight" :no-data-text="noDataText">
-        <slot name="e-no-data"></slot>
-      </e-no-data>
+      <e-empty :empty-icon-url="emptyIconUrl" :empty-icon-size="emptyIconSize" :empty-icon-height="emptyIconHeight" :empty-text="emptyText">
+        <slot name="empty-action"></slot>
+      </e-empty>
     </slot>
   </view>
 </template>
 
 <script>
 import eLoadingIcon from '../e-loading-icon/e-loading-icon'
-import eNoData from '../e-no-data/e-no-data.vue'
+import eEmpty from '../e-empty/e-empty.vue'
 
 export default {
   name: 'e-load-more',
   components: {
     eLoadingIcon,
-    eNoData
+    eEmpty
   },
   props: {
     status: {
@@ -48,23 +48,22 @@ export default {
       type: String,
       default: '没有更多了'
     },
-    noDataSize: {
+    emptyIconSize: {
       type: [String, Number],
       default: 160
     },
-    noDataUrl: {
+    emptyIconUrl: {
       type: String,
       default: 'dingdan'
     },
-    noDataText: {
-      type: String,
-      default: ''
+    emptyText: {
+      type: String
     },
     isNoDataAction: {
       type: Boolean,
       default: false
     },
-    noDataHeight: {
+    emptyIconHeight: {
       type: String,
       default: '650rpx'
     },

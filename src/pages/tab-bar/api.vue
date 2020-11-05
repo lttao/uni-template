@@ -1,14 +1,14 @@
 <template>
   <view>
-    <e-no-data no-data-text="暂无API展示" />
+    <e-empty empty-text="暂无API展示" />
   </view>
 </template>
 
 <script>
-import eNoData from '@/components/e-no-data/e-no-data.vue'
+import eEmpty from '@/components/e-empty/e-empty.vue'
 export default {
   components: {
-    eNoData
+    eEmpty
   },
   data() {
     return {}

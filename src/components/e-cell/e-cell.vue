@@ -34,7 +34,7 @@
 
 <script>
 import eIcon from '../e-icon/e-icon.vue'
-import mixin from '../e-mixin/index.js'
+import mixin from '../e-mixin'
 export default {
   name: 'e-cell',
   mixins: [mixin],
@@ -162,7 +162,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/common/scss/elegant-ui.scss';
+@import '../e-styles/index.scss';
 
 .e-cell {
   &-title {

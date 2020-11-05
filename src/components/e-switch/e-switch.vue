@@ -14,7 +14,7 @@
 
 <script>
 import eLoadingIcon from '../e-loading-icon/e-loading-icon.vue'
-import mixin from '../e-mixin/index.js'
+import mixin from '../e-mixin'
 export default {
   name: 'e-switch',
   mixins: [mixin],

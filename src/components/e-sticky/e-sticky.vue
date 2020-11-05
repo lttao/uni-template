@@ -16,7 +16,7 @@
           top: stickyTop + 'px',
           left: left + 'px',
           width: width === 'auto' ? 'auto' : width + 'px',
-          zIndex: uZIndex
+          zIndex: eZIndex
         }"
       >
         <slot></slot>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import mixin from '@/util/mixin/index.js'
+import mixin from '../e-mixin'
 export default {
   name: 'e-sticky',
   mixins: [mixin],
@@ -81,7 +81,7 @@ export default {
     }
   },
   computed: {
-    uZIndex() {
+    eZIndex() {
       return this.zIndex ? this.zIndex : 99
     }
   },

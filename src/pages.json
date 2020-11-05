@@ -31,7 +31,12 @@
 			}
 		},
 
-		
+		{
+			"path": "pages/components/action-sheet",
+			"style": {
+				"navigationBarTitleText": "Action-sheet"
+			}
+		},
 		{
 			"path": "pages/components/button",
 			"style": {
