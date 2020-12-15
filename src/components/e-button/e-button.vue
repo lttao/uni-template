@@ -1,8 +1,8 @@
 <!-- @format -->
 
 <template>
-  <button @click="onClick" :hover-class="hoverClass" :open-type="openType" :style="[style]" :class="{ disabled: disabled, plain }" class="e-button">
-    <view v-if="loading" class="e-flex row-center col-center">
+  <button @click="onClick" :hover-class="hoverClass" :open-type="openType" :style="[style]" :class="{ disabled, loading, plain }" class="e-button">
+    <view v-if="loading" class="e-flex e-row-center e-col-center">
       <e-loading-icon :type="loadingType" :size="loadingIconSize" />
       <text class="loading-text">{{ loadingText }}</text>
     </view>
@@ -12,14 +12,84 @@
 </template>
 
 <script>
-import eLoadingIcon from '../e-loading-icon/e-loading-icon'
+import ELoadingIcon from '../e-loading-icon/e-loading-icon.vue'
 import mixin from '../e-mixin'
 
+const styleConfig = {
+  type: {
+    primary: {
+      plain: {
+        background: 'transparent',
+        border: 'solid 1px #0091FF',
+        color: '#0091FF',
+        hoverClass: 'plain-primary-hover'
+      },
+      default: {
+        background: 'linear-gradient(38deg, #07BDFF 0%, #0091FF 100%)',
+        border: 'none',
+        color: '#fff'
+      }
+    },
+    warning: {
+      plain: {
+        background: 'transparent',
+        border: 'solid 1px #FB684F',
+        color: '#FB684F',
+        hoverClass: 'plain-warning-hover'
+      },
+      default: {
+        background: 'linear-gradient(90deg, #FF8C4D 0%, #FB684F 100%)',
+        border: 'none',
+        color: '#fff'
+      }
+    },
+    default: {
+      plain: {
+        background: 'transparent',
+        border: 'solid 1px #ccc',
+        color: '#333',
+        hoverClass: 'plain-default-hover'
+      },
+      default: {
+        background: '#fff',
+        border: 'none',
+        color: '#333'
+      }
+    }
+  },
+  size: {
+    mini: {
+      display: 'inline-flex',
+      width: 'auto',
+      minWidth: '168rpx',
+      height: '64rpx',
+      fontWeight: 400,
+      fontSize: '13px',
+      borderRadius: '24rpx'
+    },
+    middle: {
+      display: 'inline-flex',
+      width: 'auto',
+      minWidth: '168rpx',
+      height: '68rpx',
+      fontWeight: 400,
+      fontSize: '14px',
+      borderRadius: '24rpx'
+    },
+    default: {
+      height: '88rpx',
+      fontWeight: 400,
+      fontSize: '16px',
+      borderRadius: '24rpx'
+    }
+  }
+}
+
 export default {
-  name: 'e-button',
+  name: 'eButton',
   mixins: [mixin],
   components: {
-    eLoadingIcon
+    ELoadingIcon
   },
   props: {
     // 是否禁用
@@ -43,12 +113,12 @@ export default {
     // 大小
     size: {
       type: String,
-      default: ''
+      default: 'default'
     },
     // 样式
     type: {
       type: String,
-      default: ''
+      default: 'default'
     },
     // 按钮是否镂空，背景色透明
     plain: {
@@ -91,7 +161,7 @@ export default {
       default: ''
     },
     // 按钮圆角
-    radius: {
+    borderRadius: {
       type: [Number, String],
       default: ''
     },
@@ -105,6 +175,13 @@ export default {
       type: Boolean,
       default: false
     },
+    // 圆形按钮
+    bold: {
+      type: Boolean,
+      default: false
+    },
+    // 字体大小
+    fontSize: [Number, String],
     // 终极样式
     buttonStyle: {
       type: Object,
@@ -113,21 +190,18 @@ export default {
   },
   computed: {
     hoverClass() {
-      const { loading, plain, type } = this
-      if (loading) return ''
-      else if (plain) {
-        if (type === 'primary') return 'plain-primary-hover'
-        else if (type === 'error') return 'plain-error-hover'
-        else if (type === 'success') return 'plain-success-hover'
-        else return 'plain-default-hover'
-      }
+      const { loading, disabled, plain, type } = this
+      if (loading || disabled) return ''
+      if (plain) return styleConfig.type[type].plain.hoverClass
       return 'btn-hover'
     },
+    // TODO: loading的颜色
     loadingType() {
       const { plain, type } = this
       if (plain) return type
       return 'white'
     },
+    // TODO: loading的大小
     loadingIconSize() {
       const { size, loadingSize } = this
       if (loadingSize) return loadingSize
@@ -135,80 +209,29 @@ export default {
         case 'middle':
           return 36
         case 'mini':
-          return 30
+          return 34
         default:
           return 40
       }
     },
     style() {
-      const { buttonStyle, type, plain, size, width, height, radius, addUnit, round, square } = this
-      const style = buttonStyle || {}
-      switch (type) {
-        case 'primary':
-          style.background = '#00B1F1'
-          style.borderColor = '#00B1F1'
-          break
-        case 'success':
-          style.background = '#07c160'
-          style.borderColor = '#07c160'
-          break
-        case 'error':
-          style.background = '#FE491A'
-          style.borderColor = '#FE491A'
-          break
-        default:
-          style.background = '#5e6479'
-          style.borderColor = '#5e6479'
+      const { type, plain, size, width, height, bold, borderRadius, addUnit, round, square, fontSize, buttonStyle } = this
+
+      let style = {}
+      if (plain && styleConfig.type[type]) {
+        style = { ...styleConfig.type[type].plain }
+      } else {
+        style = { ...styleConfig.type[type].default }
       }
-      // 镂空
-      if (plain) {
-        style.background = 'transparent'
-        // 更改镂空字体色
-        switch (type) {
-          case 'primary':
-            style.color = '#00B1F1'
-            break
-          case 'success':
-            style.color = '#07c160'
-            break
-          case 'error':
-            style.color = '#FE491A'
-            break
-          default:
-            style.color = '#5e6479'
-        }
-      }
-      // 更改按钮大小
-      switch (size) {
-        case 'middle':
-          style.width = 'auto'
-          style.minWidth = width ? addUnit(width) : '324rpx'
-          style.height = height ? addUnit(height) : '80rpx'
+      style = { ...style, ...styleConfig.size[size], ...buttonStyle }
+      if (fontSize) style.fontSize = addUnit(fontSize)
+      if (width) style.width = addUnit(width)
+      if (height) style.height = addUnit(height)
+      if (bold) style.fontWeight = 'bold'
+      if (round) style.borderRadius = height ? addUnit(height) : styleConfig.size[size].height
+      if (square) style.borderRadius = 0
+      if (borderRadius) style.borderRadius = addUnit(borderRadius)
 
-          if (round) style.borderRadius = height ? addUnit(height) : '80rpx'
-          else if (square) style.borderRadius = 0
-          else style.borderRadius = radius || Number(radius || 0) === 0 ? addUnit(radius) : '12rpx'
-
-          style.display = 'inline-flex'
-          style.fontSize = '16px'
-          break
-        case 'mini':
-          style.width = 'auto'
-          style.minWidth = width ? addUnit(width) : '136rpx'
-          style.height = height ? addUnit(height) : '56rpx'
-
-          if (round) style.borderRadius = height ? addUnit(height) : '56rpx'
-          else if (square) style.borderRadius = 0
-          else style.borderRadius = radius || Number(radius || 0) === 0 ? addUnit(radius) : '12rpx'
-
-          style.display = 'inline-flex'
-          style.fontSize = '12px'
-          break
-        default:
-          if (round) style.borderRadius = height ? addUnit(height) : '88rpx'
-          else if (square) style.borderRadius = 0
-          else style.borderRadius = radius || Number(radius || 0) === 0 ? addUnit(radius) : '12rpx'
-      }
       return style
     }
   },
@@ -225,19 +248,13 @@ export default {
 @import '../e-styles/index.scss';
 .e-button {
   width: 100%;
-  height: 88rpx;
-  border: solid 1px #5e6479;
-  border-radius: 12rpx;
-  padding: 0 10rpx;
-  box-sizing: border-box;
+  padding: 0 30rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
-  font-weight: 500;
-  font-size: 17px;
-  color: #fff;
   letter-spacing: 0.5px;
+  box-sizing: border-box;
   &::after {
     width: 0;
     height: 0;
@@ -248,7 +265,7 @@ export default {
   }
 }
 .plain-primary-hover {
-  background: #00b1f1 !important;
+  background: #0091ff !important;
   color: #fff !important;
   opacity: 0.3;
 }
@@ -257,19 +274,26 @@ export default {
   color: #fff !important;
   opacity: 0.3;
 }
-.plain-error-hover {
-  background: #fe491a !important;
+.plain-warning-hover {
+  background: #fb684f !important;
   color: #fff !important;
   opacity: 0.3;
 }
 .plain-default-hover {
-  background: #5e6479 !important;
+  background: #ccc !important;
   color: #fff !important;
   opacity: 0.3;
 }
-.btn-hover,
-.disabled {
+.btn-hover {
   opacity: 0.3;
+}
+.disabled {
+  background: #ccc !important;
+  border: none !important;
+  color: #fff !important;
+}
+.loading {
+  opacity: 0.8;
 }
 .mask {
   position: fixed;

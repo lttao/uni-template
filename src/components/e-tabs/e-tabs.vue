@@ -1,9 +1,9 @@
 <template>
-  <e-sticky :enable="sticky" :offsetTop="offsetTop" :h5NavHeight="h5NavHeight">
+  <e-sticky @sticky="onSticky" :enable="sticky" :offset-top="offsetTop" :h5-nav-height="h5NavHeight" :custom-nav="customNav">
     <view class="e-tabs" :style="{ height: addUnit(height) }">
       <view :style="[mianStyle]">
         <scroll-view scroll-x class="e-scroll-view" :scroll-left="scrollLeft" scroll-with-animation>
-          <view class="e-scroll-box" :style="{ height: addUnit(height) }" :class="{ 'e-tabs-scorll-flex': !scroll }">
+          <view class="e-scroll-box" :style="{ height: addUnit(height), padding: `0 ${addUnit(margin)}` }" :class="{ 'e-tabs-scorll-flex': !scroll }">
             <block v-for="(item, index) in list" :key="index">
               <view @click="clickTab(index)" :style="[tabItemStyle(index)]" class="e-tab-item line-1">
                 {{ item | itemFormat(listKey) }}
@@ -24,12 +24,12 @@
 
 <script>
 import mixin from '../e-mixin'
-import eSticky from '../e-sticky/e-sticky.vue'
+import ESticky from '../e-sticky/e-sticky.vue'
 export default {
-  name: 'e-tabs',
+  name: 'eTabs',
   mixins: [mixin],
   components: {
-    eSticky
+    ESticky
   },
   props: {
     // 导航菜单是否需要滚动，如只有2或者3个的时候，就不需要滚动了，此时使用flex平分tab的宽度
@@ -62,7 +62,7 @@ export default {
     // 背景颜色
     background: {
       type: String,
-      default: '#fff'
+      default: ''
     },
     // 是否开启固定
     fixed: {
@@ -107,17 +107,55 @@ export default {
     // 默认颜色
     defaultColor: {
       type: String,
-      default: '#1a1a1a'
+      default: '#666666'
     },
     // 选中颜色
     activeColor: {
       type: String,
-      default: 'blue'
+      default: '#00B1F1'
+    },
+    // 选中样式
+    activeStyle: {
+      type: Object,
+      default: () => ({})
     },
     // 动画时间
     duration: {
       type: [String, Number],
       default: 0.4
+    },
+    fontSize: {
+      type: Number,
+      default: 14
+    },
+    // 边距
+    margin: {
+      type: [String, Number],
+      default: 14
+    },
+    // 间隙距离
+    gap: {
+      type: [String, Number],
+      default: 16
+    },
+    // 是否开启缩放
+    scale: Boolean,
+    // 未选中字体缩小比例
+    scaleValue: {
+      type: Number,
+      default: 0.85
+    },
+    // 未选中字体是否加粗
+    bold: Boolean,
+    // 滑动底部 距离tabs底部的距离
+    lineBottom: {
+      type: [String, Number],
+      default: 0
+    },
+    // 是否自定义头部
+    customNav: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -137,18 +175,20 @@ export default {
   },
   computed: {
     mianStyle() {
-      const { addUnit, height, fixed, background, offsetTop, zIndex } = this
+      const { addUnit, height, fixed, background } = this
       const style = {
         width: '100%',
         height: addUnit(height),
         background
       }
       if (fixed) {
+        const { zIndex, h5NavHeight, customNav, offsetTop } = this
         style.position = 'fixed'
         style.zIndex = zIndex
 
         // #ifdef H5
-        style.top = `${uni.upx2px(offsetTop) + this.h5NavHeight}px`
+        if (customNav) style.top = `${uni.upx2px(offsetTop)}px`
+        else style.top = `${uni.upx2px(offsetTop) + h5NavHeight}px`
         // #endif
         // #ifndef H5
         style.top = `${uni.upx2px(offsetTop)}px`
@@ -158,19 +198,26 @@ export default {
     },
     tabItemStyle() {
       return (index) => {
-        const { itemStyle, number, addUnit, height, current, defaultColor, activeColor, duration } = this
-        const style = {
+        const { itemStyle, number, addUnit, height, current, defaultColor, activeColor, activeStyle, gap, scale, fontSize, bold, duration, scaleValue } = this
+        let style = {
           ...itemStyle,
           height: addUnit(height),
           lineHeight: addUnit(height),
           transition: `all ${number(duration) ? `${duration}s` : duration}`,
-          color: current === index ? activeColor : defaultColor
+          color: current === index ? activeColor : defaultColor,
+          padding: `0 ${addUnit(gap)}`,
+          fontSize: fontSize + 'px',
+          fontWeight: bold && !scale ? 'bold' : 'normal',
+          transform: scale ? `scale(${scaleValue})` : 'scale(1)'
+        }
+        if (current === index) {
+          style = { ...style, ...activeStyle, transform: 'scale(1)', fontWeight: bold ? 'bold' : 'normal' }
         }
         return style
       }
     },
     tabLineStyle() {
-      const { number, current, itemsDomInfo, duration } = this
+      const { number, current, itemsDomInfo, duration, margin, lineBottom, addUnit } = this
       let tabBarWidth = 0
       let tabBarPosition = 0
       const currentItemInfo = itemsDomInfo[current] // 当前选中item的DOM信息
@@ -180,7 +227,8 @@ export default {
       }
       const style = {
         width: `${tabBarWidth}px`,
-        transform: `translate3d(${tabBarPosition}px, 0, 0)`,
+        bottom: addUnit(lineBottom),
+        transform: `translate3d(${tabBarPosition + uni.upx2px(margin)}px, 0, 0)`,
         transition: `all ${number(duration) ? `${duration}s` : duration}`
       }
       return style
@@ -201,6 +249,9 @@ export default {
     this.init()
   },
   methods: {
+    onSticky(sticky) {
+      this.$emit('sticky', sticky)
+    },
     // 初始化数据
     init() {
       this.getDomInfo('.e-tab-item', true).then((res = []) => {
@@ -239,7 +290,7 @@ scroll-view {
   box-sizing: border-box;
 }
 
-/deep/ ::-webkit-scrollbar {
+::v-deep ::-webkit-scrollbar {
   display: none;
   width: 0 !important;
   height: 0 !important;
@@ -253,7 +304,7 @@ scroll-view {
 
 /* #ifdef H5 */
 // 通过样式穿透，隐藏H5下，scroll-view下的滚动条
-scroll-view /deep/ ::-webkit-scrollbar {
+scroll-view ::-webkit-scrollbar {
   display: none;
   width: 0 !important;
   height: 0 !important;
@@ -266,15 +317,16 @@ scroll-view /deep/ ::-webkit-scrollbar {
   width: 100%;
   white-space: nowrap;
   position: relative;
+  overflow: hidden;
 }
 
 .e-tab-item {
   position: relative;
+  z-index: 1;
   display: inline-block;
-  padding: 0 20rpx;
   text-align: center;
   transition-property: background-color, color;
-  font-weight: bold;
+  box-sizing: border-box;
 }
 
 .e-tab-line {

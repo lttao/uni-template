@@ -5,11 +5,13 @@
     <e-tabs @change="change" :current="current" :list="list" :item-style="{ fontSize: '30rpx' }" sticky :offsetTop="80"></e-tabs>
 
     <view @click="current = index" v-for="(item, index) in list" :key="index">{{ item }}</view>
+    <!-- :active-style="{ transform: 'scale(1.1)' }" -->
     <e-tabs @change="change" :current="current" :list="list" :height="100">
       <view slot="tabLine">
         <image style="width: 50rpx; height: 20rpx; background: red;" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1570848938,378600287&fm=26&gp=0.jpg" mode="" />
       </view>
     </e-tabs>
+    <e-tabs @change="change" :current="current" :list="list" :item-style="{ fontSize: '30rpx' }" scale></e-tabs>
     <view style="height: 1000px"></view>
   </view>
 </template>
@@ -29,6 +31,10 @@ export default {
   onLoad() {
     setTimeout(() => {
       this.list = ['A', 'BBBBBBBB', 'CC', 'A', 'BBBBBBBB', 'CC', 'A', 'BBBBBBBB', 'CC']
+
+      this.$nextTick(() => {
+        this.current = 1
+      })
     }, 1000)
   },
   methods: {

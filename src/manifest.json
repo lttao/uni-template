@@ -55,7 +55,8 @@
                 "share" : {},
                 "ad" : {}
             }
-        }
+        },
+        "nvueLaunchMode" : ""
     },
     /* SDK配置 */
     "quickapp" : {},

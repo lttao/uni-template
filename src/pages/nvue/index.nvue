@@ -1,0 +1,98 @@
+<template>
+	<view class="page-container">
+		<view class="status-bar"></view>
+		
+		<list class="scroll-container">
+			<header class="search-bar">
+				<text>搜索框</text>
+			</header>
+			
+			<refresh @refresh="onrefresh" @pullingdown="onpullingdown" :display="refreshing ? 'show' : 'hide'">
+				<view class="tab-bar">
+					<text>Refreshing...</text>
+				</view>
+			</refresh>
+			
+			<cell>
+				<swiper class="swiper" style="height: 500rpx;">
+						<swiper-item>
+								<view class="swiper-item uni-bg-red">A</view>
+						</swiper-item>
+						<swiper-item>
+								<view class="swiper-item uni-bg-green">B</view>
+						</swiper-item>
+						<swiper-item>
+								<view class="swiper-item uni-bg-blue">C</view>
+						</swiper-item>
+				</swiper>
+			</cell>
+			
+			<header class="tab-bar">
+				<text>你说</text>
+			</header>
+			
+			<!-- 注意事项: 不能使用 index 作为 key 的唯一标识 -->
+			<cell v-for="(item, index) in 51" :key="index">
+				<text>但是开发</text>
+			</cell>
+		</list>
+	</view>
+</template>
+
+<script>
+export default {
+	data() {
+		return {
+			refreshing: 'hide'
+		}
+	},
+	methods: {
+		onrefresh() {
+			setTimeout(() => {
+				this.refreshing = 'hide'
+			}, 2000)
+		},
+		onpullingdown() {
+			this.refreshing = 'show'
+		}
+	}
+}
+</script>
+
+<style scoped>
+.page-container {
+	flex: 1;
+}
+.status-bar {
+	width: 750rpx;
+	height: 20px;
+	background-color: red;
+}
+.scroll-container {
+	position: relative;
+	flex: 1;
+}
+.search-bar {
+	position: absolute;
+	z-index: 99;
+	width: 750rpx;
+	height: 88rpx;
+	background-color: red;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+.tab-bar {
+	width: 750rpx;
+	height: 88rpx;
+	background-color: #fff;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.swiper,
+.swiper-item {
+	background-color: blue;
+}
+</style>
