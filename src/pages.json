@@ -39,6 +39,13 @@
 		},
 
 		{
+			"path": "pages/components/refresh",
+			"style": {
+				"navigationBarTitleText": "刷新"
+			}
+		},
+
+		{
 			"path": "pages/components/action-sheet",
 			"style": {
 				"navigationBarTitleText": "Action-sheet"
