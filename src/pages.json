@@ -1,13 +1,6 @@
 {
 	"pages": [
 		{
-			"path": "pages/nvue/index",
-			"style": {
-				"navigationBarTitleText": "",
-				"navigationStyle": "custom"
-			}
-		},
-		{
 			"path": "pages/tab-bar/components",
 			"style": {
 				"navigationBarTitleText": "组件"
@@ -182,12 +175,6 @@
                 "selectedIconPath": "static/images/tab-bar/1-checked.png",
                 "text": "组件"
             },
-            {
-                "pagePath": "pages/nvue/index",
-                "iconPath": "static/images/tab-bar/2.png",
-                "selectedIconPath": "static/images/tab-bar/2-checked.png",
-                "text": "NVUE"
-			},
 			{
                 "pagePath": "pages/tab-bar/api",
                 "iconPath": "static/images/tab-bar/2.png",

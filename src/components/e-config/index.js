@@ -39,9 +39,9 @@ export const BUTTON = {
   }
 }
 
-export const IMAGE = {
-  placeHolder: imagePlaceholder
-}
+// export const IMAGE = {
+//   placeHolder: imagePlaceholder
+// }
 
 export const LOAD_MORE = {
   statusTypeMap: {

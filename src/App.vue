@@ -2,14 +2,14 @@
 export default {
   onLaunch: function() {
     console.log('App Launch')
-    this.getUiStyle()
-    uni.onUIStyleChange((res) => {
-      if (res.style === 'dark') {
-        this.setDarkUiStyle()
-      } else {
-        this.setLightUiStyle()
-      }
-    })
+    // this.getUiStyle()
+    // uni.onUIStyleChange((res) => {
+    //   if (res.style === 'dark') {
+    //     this.setDarkUiStyle()
+    //   } else {
+    //     this.setLightUiStyle()
+    //   }
+    // })
   },
   onShow: function() {
     console.log('App Show')
